@@ -2,9 +2,9 @@ export class Event {
   constructor(
     public name: string,
     public datetime: Date,
-    public address: string,
     public city: string,
-    public description: string,
+    public address: string,
+    public description?: string,
     public image?: string,
     public comments?: Comment[],
     public _id?: string
