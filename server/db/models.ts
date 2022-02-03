@@ -15,6 +15,7 @@ export class Event extends Model {
     public description?: string,
     public image?: string,
     public comments?: Comment[],
+    public user?: User,
     public _id?: string
   ) {
     super();
@@ -28,10 +29,10 @@ export class Event extends Model {
 
 export class Comment extends Model {
   constructor(
-    public username: string = '',
+    public user: User | null = null,
     public eventId: string = '',
-    public timestamp: Date = new Date(0),
     public text: string = '',
+    public timestamp?: Date,
     public _id?: string
   ) {
     super();
@@ -45,10 +46,10 @@ export class Comment extends Model {
 
 export class Message extends Model {
   constructor(
-    public sender: User | null = null,
+    public user: User | null = null,
     public recipient: User | null = null,
-    public timestamp: Date = new Date(0),
     public text: string = '',
+    public timestamp?: Date,
     public _id?: string
   ) {
     super();
@@ -64,6 +65,8 @@ export class User extends Model {
   constructor(
     public username: string = '',
     public password?: string,
+    public salt?: string,
+    public image?: string,
     public name?: string,
     public email?: string,
     public _id?: string

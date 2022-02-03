@@ -6,7 +6,6 @@ const API = {
   LOGIN: '/api/login',
   REGISTER: '/api/register',
   EVENTS: '/api/events',
-  COMMENTS: '/api/comments',
   MESSAGES: '/api/messages',
 };
 
@@ -44,8 +43,11 @@ export class DataService {
     return this.http.delete<Event>(`${API.EVENTS}/${event._id}`);
   }
 
-  postComment(comment: Comment) {
-    return this.http.post<Comment>(`${API.COMMENTS}`, comment);
+  postComment(event: Event, comment: Comment) {
+    return this.http.post<Comment>(
+      `${API.EVENTS}/${event._id}/comment`,
+      comment
+    );
   }
 
   getMessages() {
