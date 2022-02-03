@@ -1,2 +1,27 @@
 <app-navbar></app-navbar>
-<p>homepage works!</p>
+<div class="px-4 py-8 md:px-6 lg:px-8">
+  <div class="text-700 text-center">
+    <!-- <div class="text-blue-600 font-bold mb-3">
+      <i class="pi pi-discord"></i>&nbsp;POWERED BY DISCORD
+    </div> -->
+    <div class="text-900 font-bold text-5xl mb-3">
+      Nađi događaje <br />
+      i organiziraj svoje
+    </div>
+    <div class="text-700 text-2xl mb-5">
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+    </div>
+
+    <button
+      type="button"
+      class="py-4 px-6 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-full"
+    >
+      Vidi evente
+    </button>
+  </div>
+</div>
+<div
+  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 px-8 lg:px-0 gap-4 max-w-5xl mx-auto"
+>
+  <app-event-card *ngFor="let event of events" [event]="event"></app-event-card>
+</div>

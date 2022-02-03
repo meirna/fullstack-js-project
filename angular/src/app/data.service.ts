@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import { Event, Comment, Message, User } from './models';
 
 const API = {
-  LOGIN: '/api/login',
-  REGISTER: '/api/register',
-  EVENTS: '/api/events',
-  MESSAGES: '/api/messages',
+  LOGIN: 'http://localhost:8080/api/login',
+  REGISTER: 'http://localhost:8080/api/register',
+  EVENTS: 'http://localhost:8080/api/events',
+  MESSAGES: 'http://localhost:8080/api/messages',
 };
 
 @Injectable({

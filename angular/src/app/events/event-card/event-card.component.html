@@ -1,0 +1,31 @@
+<div
+  *ngIf="event"
+  class="flex flex-col max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden"
+>
+  <div class="w-full bg-cover bg-landscape">
+    <img
+      src="https://www.soundreportco.lin64.mojsite.com/media/6922_blog_post_cover_photo_large.jpg"
+    />
+  </div>
+  <div class="w-full p-4 min-h-full">
+    <p class="text-gray-600 font-semibold text-sm">
+      {{ event.datetime || "22. 3. 2022." | date: "fullDate" }}
+    </p>
+    <h1 class="text-gray-900 font-semibold text-lg leading-5 my-1">
+      {{
+        event.name.length > 80 ? (event.name | slice: 0:80) + "..." : event.name
+      }}
+    </h1>
+    <p class="text-gray-600 font-semibold text-sm">Tvornica kulture</p>
+
+    <!-- <div class="flex item-center mt-2"></div>
+    <div class="flex item-center justify-between mt-3">
+      <h1 class="text-gray-700 font-bold text-xl">$220</h1>
+      <button
+        class="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded"
+      >
+        Add to Card
+      </button>
+    </div> -->
+  </div>
+</div>

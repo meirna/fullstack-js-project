@@ -3,7 +3,11 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   content: ["./src/**/*.{html,ts}"],
   theme: {
-    extend: {},
+    extend: {
+      minHeight: {
+        full: "120px",
+      },
+    },
   },
   variants: {
     extend: {},
