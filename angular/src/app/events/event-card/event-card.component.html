@@ -16,7 +16,9 @@
         event.name.length > 80 ? (event.name | slice: 0:80) + "..." : event.name
       }}
     </h1>
-    <p class="text-gray-600 font-semibold text-sm">Tvornica kulture</p>
+    <p class="text-gray-600 font-semibold text-sm">
+      {{ event.address + ", " + event.city }}
+    </p>
 
     <!-- <div class="flex item-center mt-2"></div>
     <div class="flex item-center justify-between mt-3">

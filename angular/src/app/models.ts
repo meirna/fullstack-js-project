@@ -7,26 +7,27 @@ export class Event {
     public description?: string,
     public image?: string,
     public comments?: Comment[],
+    public user?: User,
     public _id?: string
   ) {}
 }
 
 export class Comment {
   constructor(
-    public username: string,
+    public user: User,
     public eventId: string,
-    public timestamp: Date,
     public text: string,
+    public timestamp: Date,
     public _id?: string
   ) {}
 }
 
 export class Message {
   constructor(
-    public sender: User,
+    public user: User,
     public recipient: User,
-    public timestamp: Date,
     public text: string,
+    public timestamp: Date,
     public _id?: string
   ) {}
 }
@@ -35,6 +36,7 @@ export class User {
   constructor(
     public username: string,
     public password?: string,
+    public image?: string,
     public name?: string,
     public email?: string,
     public _id?: string
