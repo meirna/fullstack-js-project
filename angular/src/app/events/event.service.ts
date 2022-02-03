@@ -9,6 +9,10 @@ import { Event } from '../models';
 export class EventService {
   events?: Event[];
   eventsSubject: BehaviorSubject<Event[]> = new BehaviorSubject<Event[]>([]);
+  event?: Event;
+  eventSubject: BehaviorSubject<Event> = new BehaviorSubject<Event>(
+    new Event()
+  );
 
   constructor(private service: DataService) {
     this.service.getEvents().subscribe((res) => {
@@ -19,5 +23,14 @@ export class EventService {
 
   getEvents(): BehaviorSubject<Event[]> {
     return this.eventsSubject;
+  }
+
+  getEvent(id: string) {
+    this.service.getEvent(id).subscribe((res) => {
+      this.event = res;
+      this.eventSubject.next({ ...this.event });
+    });
+
+    return this.eventSubject;
   }
 }

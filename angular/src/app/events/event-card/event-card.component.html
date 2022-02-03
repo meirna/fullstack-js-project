@@ -1,19 +1,20 @@
 <div
   *ngIf="event"
-  class="flex flex-col max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden"
+  (click)="handleClick()"
+  class="flex flex-col max-w-md mx-auto bg-white shadow hover:shadow-sm rounded-lg overflow-hidden cursor-pointer"
 >
   <div class="w-full bg-cover bg-landscape">
-    <img
-      src="https://www.soundreportco.lin64.mojsite.com/media/6922_blog_post_cover_photo_large.jpg"
-    />
+    <img [src]="event.image | defaultImage" />
   </div>
   <div class="w-full p-4 min-h-full">
     <p class="text-gray-600 font-semibold text-sm">
-      {{ event.datetime || "22. 3. 2022." | date: "fullDate" }}
+      {{ event.datetime | date: "fullDate" }}
     </p>
     <h1 class="text-gray-900 font-semibold text-lg leading-5 my-1">
       {{
-        event.name.length > 80 ? (event.name | slice: 0:80) + "..." : event.name
+        event!.name!.length > 80
+          ? (event.name | slice: 0:80) + "..."
+          : event.name
       }}
     </h1>
     <p class="text-gray-600 font-semibold text-sm">

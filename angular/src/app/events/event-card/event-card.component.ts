@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Event } from 'src/app/models';
 
 @Component({
@@ -9,7 +10,11 @@ import { Event } from 'src/app/models';
 export class EventCardComponent implements OnInit {
   @Input() event?: Event;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
+
+  handleClick() {
+    this.router.navigate([`/events/${this.event!._id}`]);
+  }
 }

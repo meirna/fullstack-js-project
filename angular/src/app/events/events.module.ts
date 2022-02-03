@@ -5,17 +5,17 @@ import { EventsRoutingModule } from './events-routing.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { EventCardComponent } from './event-card/event-card.component';
-
+import { EventDetailComponent } from './event-detail/event-detail.component';
+import { DefaultImagePipe } from './default-image.pipe';
 
 @NgModule({
   declarations: [
     NavbarComponent,
     HomepageComponent,
-    EventCardComponent
+    EventCardComponent,
+    EventDetailComponent,
+    DefaultImagePipe,
   ],
-  imports: [
-    CommonModule,
-    EventsRoutingModule
-  ]
+  imports: [CommonModule, EventsRoutingModule],
 })
-export class EventsModule { }
+export class EventsModule {}
