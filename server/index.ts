@@ -21,7 +21,12 @@ let app: Server;
 
 const server = express()
   .use(express.json())
-  .use(helmet())
+  // TODO: remove after prod build
+  .use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+  })
+  // .use(helmet())
   /*.use(express.static(path.join(__dirname, '../frontend/dist'))) */
   .use('/api/events', eventController.router)
   .use('/api/comments', commentController.router)

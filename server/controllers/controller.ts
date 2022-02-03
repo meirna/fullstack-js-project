@@ -6,7 +6,7 @@ export default class Controller {
   constructor(
     public service: Service,
     public router = Router()
-      .get('/', service.verifyToken, service.getAll)
+      .get('/', service.getAll)
       .post('/', service.verifyToken, service.insert)
       .put(`/`, service.verifyToken, service.update)
       .get(`/:id`, service.verifyToken, service.get)
