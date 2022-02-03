@@ -27,7 +27,7 @@ export default class Service {
       const collection = await this.model.collection();
       const item = await collection.findOne({ _id: new ObjectId(id) });
       if (item.image) await this.loadImage(item);
-      if (item.user.image) await this.loadImage(item.user);
+      if (item.user?.image) await this.loadImage(item.user);
       if (item.comments?.some((comment: Comment) => comment.user.image))
         await Promise.all(
           item.comments
@@ -37,7 +37,7 @@ export default class Service {
 
       return res.status(StatusCodes.OK).send(item);
     } catch (err) {
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err);
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send();
     }
   }
 
@@ -77,7 +77,7 @@ export default class Service {
 
       return res.status(StatusCodes.OK).send(items);
     } catch (err) {
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err);
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send();
     }
   }
 
@@ -91,7 +91,7 @@ export default class Service {
 
       return res.status(StatusCodes.CREATED).send(item);
     } catch (err) {
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err);
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send();
     }
   }
 

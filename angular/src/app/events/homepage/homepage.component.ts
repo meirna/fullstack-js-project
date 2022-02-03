@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Event } from 'src/app/models';
 import { EventService } from '../event.service';
@@ -8,7 +8,7 @@ import { EventService } from '../event.service';
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.css'],
 })
-export class HomepageComponent implements OnInit {
+export class HomepageComponent implements OnInit, OnDestroy {
   events: Event[] = [];
   eventsSubject?: BehaviorSubject<Event[]>;
   eventsSubscription?: Subscription;
@@ -20,5 +20,9 @@ export class HomepageComponent implements OnInit {
     this.eventsSubscription = this.eventsSubject.subscribe(
       (res) => (this.events = res)
     );
+  }
+
+  ngOnDestroy(): void {
+    this.eventsSubscription?.unsubscribe();
   }
 }

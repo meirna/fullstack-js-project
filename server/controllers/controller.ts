@@ -9,7 +9,7 @@ export default class Controller {
       .get('/', service.getAll)
       .post('/', service.verifyToken, service.insert)
       .put(`/`, service.verifyToken, service.update)
-      .get(`/:id`, service.verifyToken, service.get)
+      .get(`/:id`, service.get)
       .delete(`/:id`, service.verifyToken, service.delete)
   ) {}
 }

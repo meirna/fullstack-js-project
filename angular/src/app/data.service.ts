@@ -27,8 +27,8 @@ export class DataService {
     return this.http.get<Event[]>(`${API.EVENTS}`);
   }
 
-  getEvent(event: Event) {
-    return this.http.get<Event>(`${API.EVENTS}/${event._id}`);
+  getEvent(id: string) {
+    return this.http.get<Event>(`${API.EVENTS}/${id}`);
   }
 
   postEvent(event: Event) {
