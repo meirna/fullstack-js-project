@@ -7,10 +7,18 @@ module.exports = {
       minHeight: {
         full: "120px",
       },
+      backgroundImage: (theme) => ({
+        check: "url('/assets/check.svg')",
+      }),
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      backgroundColor: ["checked"],
+      borderColor: ["checked"],
+      inset: ["checked"],
+      zIndex: ["hover", "active"],
+    },
   },
   plugins: [],
 };
