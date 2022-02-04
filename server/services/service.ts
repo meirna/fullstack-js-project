@@ -188,7 +188,7 @@ export default class Service {
 
   async loadImage(item: any) {
     item.image = await promisify(readFile)(
-      path.join(__dirname, `../data/images/${item.image}`),
+      path.join(__dirname, `../assets/images/${item.image}`),
       { encoding: 'base64' }
     );
 

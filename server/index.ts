@@ -28,6 +28,7 @@ const server = express()
   })
   // .use(helmet())
   /*.use(express.static(path.join(__dirname, '../frontend/dist'))) */
+  /*.use('/assets', express.static(path.join(__dirname, './assets/images'))) */
   .use('/api/events', eventController.router)
   .use('/api/comments', commentController.router)
   .use('/api/messages', messageController.router)
