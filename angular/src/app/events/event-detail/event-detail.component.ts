@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { EventService } from '../event.service';
 import { Event } from 'src/app/models';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-event-detail',
@@ -14,13 +13,8 @@ export class EventDetailComponent implements OnInit {
   event?: Event;
   eventSubject?: BehaviorSubject<Event>;
   eventSubscription?: Subscription;
-  safeSrc?: SafeUrl;
 
-  constructor(
-    private service: EventService,
-    private route: ActivatedRoute,
-    private sanitizer: DomSanitizer
-  ) {}
+  constructor(private service: EventService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.eventSubject = this.service.getEvent(
@@ -28,11 +22,6 @@ export class EventDetailComponent implements OnInit {
     );
     this.eventSubscription = this.eventSubject.subscribe((res) => {
       this.event = res;
-      if (this.event?.image) {
-        this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(
-          this.event.image
-        );
-      }
     });
   }
 

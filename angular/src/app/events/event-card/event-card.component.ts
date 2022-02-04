@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Event } from 'src/app/models';
 
 @Component({
@@ -9,15 +8,8 @@ import { Event } from 'src/app/models';
 })
 export class EventCardComponent implements OnInit {
   @Input() event?: Event;
-  safeSrc?: SafeUrl;
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    if (this.event?.image) {
-      this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(
-        this.event.image
-      );
-    }
-  }
+  ngOnInit(): void {}
 }

@@ -1,13 +1,10 @@
 import { Request, Response } from 'express';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import { ObjectId, Collection, Document } from 'mongodb';
-import { readFile } from 'fs';
-import { promisify } from 'util';
-import path from 'path';
 import { jwtVerify } from 'jose';
 
 import mongo from '../db/db';
-import { Comment, Model } from '../db/models';
+import { Model } from '../db/models';
 import { PUBLIC_KEY } from '../index';
 
 export default class Service {
@@ -19,21 +16,12 @@ export default class Service {
     this.delete = this.delete.bind(this);
     this.authorize = this.authorize.bind(this);
     this.loadUser = this.loadUser.bind(this);
-    this.loadImage = this.loadImage.bind(this);
   }
 
   async get({ params: { id } }: Request, res: Response) {
     try {
       const collection = await this.model.collection();
       const item = await collection.findOne({ _id: new ObjectId(id) });
-      if (item.image) await this.loadImage(item);
-      if (item.user?.image) await this.loadImage(item.user);
-      if (item.comments?.some((comment: Comment) => comment.user.image))
-        await Promise.all(
-          item.comments
-            ?.filter((comment: Comment) => comment.user.image)
-            .map(async (comment: Comment) => this.loadImage(comment.user))
-        );
 
       return res.status(StatusCodes.OK).send(item);
     } catch (err) {
@@ -45,35 +33,6 @@ export default class Service {
     try {
       const collection = await this.model.collection();
       const items = await collection.find({}).toArray();
-      await Promise.all(
-        items
-          .filter((item) => item.image)
-          .map(async (item) => this.loadImage(item))
-      );
-      await Promise.all(
-        items
-          .filter((item) => item.user?.image)
-          .map(async (item) => this.loadImage(item.user))
-      );
-      if (
-        items.some((item) =>
-          item.comments?.some((comment: Comment) => comment.user.image)
-        )
-      )
-        await Promise.all(
-          items
-            .filter((item) =>
-              item.comments?.some((comment: Comment) => comment.user.image)
-            )
-            .map(
-              async (item) =>
-                await Promise.all(
-                  item.comments
-                    .filter((comment: Comment) => comment.user.image)
-                    .map((comment: Comment) => this.loadImage(comment.user))
-                )
-            )
-        );
 
       return res.status(StatusCodes.OK).send(items);
     } catch (err) {
@@ -184,15 +143,5 @@ export default class Service {
       .findOne({ username: username });
 
     return rest;
-  }
-
-  async loadImage(item: any) {
-    item.image = await promisify(readFile)(
-      path.join(__dirname, `../assets/images/${item.image}`),
-      { encoding: 'base64' }
-    );
-    item.image = `data:image/png;base64, ${item.image}`;
-
-    return item;
   }
 }

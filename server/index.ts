@@ -3,6 +3,7 @@ import { readFileSync } from 'fs';
 import express from 'express';
 import helmet from 'helmet';
 import { Server } from 'http';
+import path from 'path';
 
 import mongo from './db/db';
 import eventController from './controllers/event.controller';
@@ -28,7 +29,7 @@ const server = express()
   })
   // .use(helmet())
   /*.use(express.static(path.join(__dirname, '../frontend/dist'))) */
-  /*.use('/assets', express.static(path.join(__dirname, './assets/images'))) */
+  .use('/assets', express.static(path.join(__dirname, './assets/images')))
   .use('/api/events', eventController.router)
   .use('/api/comments', commentController.router)
   .use('/api/messages', messageController.router)

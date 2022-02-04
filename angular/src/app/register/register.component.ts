@@ -14,17 +14,11 @@ export class RegisterComponent implements OnInit {
   form = this.fb.group({
     username: ['', [Validators.required, Validators.minLength(4)]],
     password: ['', Validators.required],
-    passwordRepeat: ['', Validators.required],
-    name: ['', Validators.required],
+    name: [''],
     email: ['', [Validators.required, Validators.email]],
-    remember: [this.rememberMe],
   });
 
   ngOnInit(): void {}
-
-  handleRememberClicked() {
-    this.rememberMe = !this.rememberMe;
-  }
 
   onSubmit() {}
 }
