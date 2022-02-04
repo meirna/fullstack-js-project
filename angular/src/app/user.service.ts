@@ -51,7 +51,7 @@ export class UserService {
       .subscribe((res: HttpResponse<User>) => {
         this.user = new User(res.body!.username);
         this.behaviorSubject.next({ ...this.user });
-        if (remember) this.cookieService.set('loggedIn', 'true');
+        if (remember) this.cookieService.set('loggedIn', 'true', { expires: 2 });
       });
   }
 
