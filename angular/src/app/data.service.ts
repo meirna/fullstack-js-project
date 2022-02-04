@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { Event, Comment, Message, User } from './models';
 
 const API = {
-  LOGIN: 'http://localhost:8080/api/login',
-  REGISTER: 'http://localhost:8080/api/register',
-  EVENTS: 'http://localhost:8080/api/events',
-  MESSAGES: 'http://localhost:8080/api/messages',
+  LOGIN: `${environment.api}/api/login`,
+  REGISTER: `${environment.api}/api/register`,
+  EVENTS: `${environment.api}/api/events`,
+  MESSAGES: `${environment.api}/api/messages`,
 };
 
 @Injectable({
