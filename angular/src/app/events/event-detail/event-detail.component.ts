@@ -24,4 +24,8 @@ export class EventDetailComponent implements OnInit {
       (res) => (this.event = res)
     );
   }
+
+  ngOnDestroy(): void {
+    this.eventSubscription?.unsubscribe();
+  }
 }

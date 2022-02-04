@@ -1,27 +1,27 @@
-<div
-  *ngIf="event"
-  (click)="handleClick()"
-  class="flex flex-col max-w-md mx-auto bg-white shadow hover:shadow-sm rounded-lg overflow-hidden cursor-pointer"
->
-  <div class="w-full bg-cover bg-landscape">
-    <img [src]="event.image | defaultImage" />
-  </div>
-  <div class="w-full p-4 min-h-full">
-    <p class="text-gray-600 font-semibold text-sm">
-      {{ event.datetime | date: "fullDate" }}
-    </p>
-    <h1 class="text-gray-900 font-semibold text-lg leading-5 my-1">
-      {{
-        event!.name!.length > 80
-          ? (event.name | slice: 0:80) + "..."
-          : event.name
-      }}
-    </h1>
-    <p class="text-gray-600 font-semibold text-sm">
-      {{ event.address + ", " + event.city }}
-    </p>
+<a routerLink="events/{{ event?._id }}">
+  <div
+    *ngIf="event"
+    class="flex flex-col max-w-md mx-auto bg-white shadow hover:shadow-sm rounded-lg overflow-hidden cursor-pointer"
+  >
+    <div class="w-full bg-cover bg-landscape">
+      <img [src]="event.image | defaultImage" />
+    </div>
+    <div class="w-full p-4 min-h-full">
+      <p class="text-gray-600 font-semibold text-sm">
+        {{ event.datetime | date: "fullDate" }}
+      </p>
+      <h1 class="text-gray-900 font-semibold text-lg leading-5 my-1">
+        {{
+          event!.name!.length > 80
+            ? (event.name | slice: 0:80) + "..."
+            : event.name
+        }}
+      </h1>
+      <p class="text-gray-600 font-semibold text-sm">
+        {{ event.address + ", " + event.city }}
+      </p>
 
-    <!-- <div class="flex item-center mt-2"></div>
+      <!-- <div class="flex item-center mt-2"></div>
     <div class="flex item-center justify-between mt-3">
       <h1 class="text-gray-700 font-bold text-xl">$220</h1>
       <button
@@ -30,5 +30,6 @@
         Add to Card
       </button>
     </div> -->
+    </div>
   </div>
-</div>
+</a>

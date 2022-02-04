@@ -13,8 +13,4 @@ export class EventCardComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
-
-  handleClick() {
-    this.router.navigate([`/events/${this.event!._id}`]);
-  }
 }
