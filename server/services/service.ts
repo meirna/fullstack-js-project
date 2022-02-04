@@ -191,6 +191,7 @@ export default class Service {
       path.join(__dirname, `../assets/images/${item.image}`),
       { encoding: 'base64' }
     );
+    item.image = `data:image/png;base64, ${item.image}`;
 
     return item;
   }
