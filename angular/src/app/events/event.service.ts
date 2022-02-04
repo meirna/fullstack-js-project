@@ -7,10 +7,12 @@ import { Event } from '../models';
   providedIn: 'root',
 })
 export class EventService {
-  events?: Event[];
-  eventsSubject: BehaviorSubject<Event[]> = new BehaviorSubject<Event[]>([]);
-  event?: Event;
-  eventSubject: BehaviorSubject<Event> = new BehaviorSubject<Event>(
+  private events?: Event[];
+  private eventsSubject: BehaviorSubject<Event[]> = new BehaviorSubject<
+    Event[]
+  >([]);
+  private event?: Event;
+  private eventSubject: BehaviorSubject<Event> = new BehaviorSubject<Event>(
     new Event()
   );
 

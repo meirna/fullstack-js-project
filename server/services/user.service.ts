@@ -11,6 +11,7 @@ class UserService extends Service {
   constructor(model: User) {
     super(model);
     this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
     this.register = this.register.bind(this);
   }
 
@@ -29,7 +30,11 @@ class UserService extends Service {
     return res
       .cookie('jwt', await this.generateJWT(username), { httpOnly: true })
       .status(StatusCodes.OK)
-      .send();
+      .send({ username: username });
+  }
+
+  async logout(req: Request, res: Response) {
+    return res.clearCookie('jwt').status(StatusCodes.OK).send();
   }
 
   async register({ body }: Request, res: Response) {
@@ -49,7 +54,7 @@ class UserService extends Service {
       });
       return res.status(StatusCodes.CREATED).send();
     } catch (err) {
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err);
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send();
     }
   }
 

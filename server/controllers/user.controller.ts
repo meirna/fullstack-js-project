@@ -6,6 +6,7 @@ class UserController extends Controller {
     super(service);
     this.router
       .post('/login', service.login)
+      .post('/logout', service.logout)
       .post('/register', service.register);
   }
 }

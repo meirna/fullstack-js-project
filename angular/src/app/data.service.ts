@@ -4,8 +4,9 @@ import { environment } from 'src/environments/environment';
 import { Event, Comment, Message, User } from './models';
 
 const API = {
-  LOGIN: `${environment.api}/api/login`,
-  REGISTER: `${environment.api}/api/register`,
+  LOGIN: `${environment.api}/api/users/login`,
+  LOGOUT: `${environment.api}/api/users/logout`,
+  REGISTER: `${environment.api}/api/users/register`,
   EVENTS: `${environment.api}/api/events`,
   MESSAGES: `${environment.api}/api/messages`,
 };
@@ -17,7 +18,17 @@ export class DataService {
   constructor(private http: HttpClient) {}
 
   login(user: User) {
-    return this.http.post<User>(`${API.LOGIN}`, user);
+    return this.http.post<User>(`${API.LOGIN}`, user, {
+      observe: 'response',
+      withCredentials: true,
+    });
+  }
+
+  logout() {
+    return this.http.post<User>(`${API.LOGOUT}`, null, {
+      observe: 'response',
+      withCredentials: true,
+    });
   }
 
   register(user: User) {

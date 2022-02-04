@@ -10,12 +10,17 @@
         >Registriraj se</a
       >
     </div>
+    <div class="h-5 text-center font-medium tracking-wide text-red-500 text-xs">
+      {{ error ? "Neispravni korisnički podaci" : "" }}
+    </div>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <label for="email" class="block text-900 font-medium mb-2">Email</label
+      <label for="username" class="block text-900 font-medium mb-2"
+        >Korisničko ime</label
       ><input
-        id="email"
+        id="username"
         type="text"
-        formControlName="email"
+        formControlName="username"
+        [ngClass]="error ? 'border-2 border-red-500' : ''"
         class="w-full p-3 mb-3 border rounded-md"
       /><label for="password" class="block text-900 font-medium mb-2"
         >Lozinka</label
@@ -23,12 +28,14 @@
         id="password"
         type="password"
         formControlName="password"
-        class="hover:border-blue-400 w-full p-3 mb-3 border rounded-md"
+        [ngClass]="error ? 'border-2 border-red-500' : ''"
+        class="hover:border-indigo-400 w-full p-3 mb-3 border rounded-md"
+        autocomplete="on"
       />
       <div
         class="flex flex-col align-items-center justify-content-between mb-6"
       >
-        <div class="flex justify-between mb-12">
+        <div class="flex justify-between">
           <label class="flex items-center space-x-3 mb-3">
             <input
               (change)="handleRememberClicked()"
@@ -48,7 +55,11 @@
         </div>
         <button
           type="submit"
-          class="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+          [disabled]="!form.valid"
+          [ngClass]="
+            form.valid ? 'bg-indigo-600  hover:bg-indigo-700' : 'bg-indigo-400'
+          "
+          class="w-full py-2 px-4 mt-12 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
         >
           Prijavi me
         </button>

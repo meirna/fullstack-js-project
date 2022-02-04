@@ -1,28 +1,69 @@
 <div class="flex items-center justify-center lg:px-20 md:px-14 px-6 py-8">
   <div class="surface-card p-4 shadow border-round w-full lg:w-1/2">
     <div class="text-center mb-5">
-      <img src="assets/key.svg" class="h-9 mx-auto mb-3" />
-      <div class="text-900 text-3xl font-medium mb-3">Registracija</div>
+      <img
+        [src]="
+          submitted && !error
+            ? 'assets/check-circle.svg'
+            : 'assets/shield-check.svg'
+        "
+        class="h-9 mx-auto mb-3"
+      />
+      <div class="text-900 text-3xl font-medium mb-3">
+        {{ submitted && !error ? "Registracija uspješna!" : "Registracija" }}
+      </div>
+      <a
+        routerLink="/login"
+        class="font-medium no-underline ml-2 text-blue-500 cursor-pointer"
+        >Prijavi se</a
+      >
     </div>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <label for="email" class="block text-900 font-medium mb-2">Email</label
-      ><input
-        id="email"
+    <form
+      *ngIf="!submitted || error"
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+    >
+      <label for="username" class="inline-block text-900 font-medium mb-2"
+        >Korisničko ime *</label
+      ><span
+        *ngIf="error"
+        class="font-medium tracking-wide text-red-500 text-xs ml-2"
+        >Zauzeto</span
+      >
+      <input
+        id="username"
         type="text"
-        formControlName="email"
+        formControlName="username"
+        [ngClass]="error ? 'border-red-500' : 'hover:border-indigo-600'"
         class="w-full p-3 mb-3 border rounded-md"
-      /><label for="password" class="block text-900 font-medium mb-2"
-        >Lozinka</label
-      ><input
+        autofocus
+      />
+      <label for="password" class="block text-900 font-medium mb-2"
+        >Lozinka *</label
+      >
+      <input
         id="password"
         type="password"
         formControlName="password"
-        class="hover:border-blue-400 w-full p-3 mb-3 border rounded-md"
+        class="w-full p-3 mb-3 border rounded-md hover:border-indigo-600"
+      />
+      <label for="email" class="block text-900 font-medium mb-2"
+        >Email adresa</label
+      >
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        class="w-full p-3 border rounded-md hover:border-indigo-600"
       />
 
       <button
         type="submit"
-        class="w-full py-2 px-4 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+        [disabled]="!form.valid"
+        [ngClass]="
+          form.valid ? 'bg-indigo-600  hover:bg-indigo-700' : 'bg-indigo-400'
+        "
+        class="w-full py-2 px-4 mt-12 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
       >
         Registriraj me
       </button>
