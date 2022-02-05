@@ -15,14 +15,22 @@ export class HomepageComponent implements OnInit, OnDestroy {
 
   constructor(private service: EventService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.eventsSubject = this.service.getEvents();
     this.eventsSubscription = this.eventsSubject.subscribe(
       (res) => (this.events = res)
     );
   }
 
-  ngOnDestroy(): void {
+  scrollToEvents() {
+    document.querySelector('#events')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'nearest',
+    });
+  }
+
+  ngOnDestroy() {
     this.eventsSubscription?.unsubscribe();
   }
 }

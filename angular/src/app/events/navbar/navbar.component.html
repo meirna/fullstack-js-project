@@ -23,13 +23,11 @@
             </div>
           </div>
         </div>
-        <div class="block">
+        <div class="hidden md:block">
           <div class="ml-4 flex items-center md:ml-6">
-            <a
-              routerLink="{{ isLoggedIn ? '/events/new' : '/login' }}"
-              class="mr-5"
-            >
+            <a class="mr-5">
               <button
+                (click)="onButtonClick()"
                 type="button"
                 class="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
               >
@@ -39,16 +37,16 @@
             <a
               *ngIf="isLoggedIn"
               routerLink="/messages"
-              class="p-1 rounded-full text-gray-400 focus:outline-none hover:text-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+              class="block p-1 rounded-full text-gray-400 focus:outline-none hover:text-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
             >
               <span class="sr-only"> Poruke </span>
               <img src="assets/inbox.svg" class="h-6 w-6" />
             </a>
-            <div *ngIf="isLoggedIn" class="ml-3 relative">
+            <div *ngIf="isLoggedIn" class="ml-3">
               <div class="relative inline-block text-left">
                 <div>
                   <button
-                    (click)="handleProfileClick()"
+                    (click)="onProfileClick()"
                     type="button"
                     class="flex items-center justify-center w-full rounded-md px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-50 hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500"
                     id="options-menu"
@@ -68,16 +66,7 @@
                     aria-labelledby="options-menu"
                   >
                     <a
-                      href="#"
-                      class="block px-4 py-2 text-md text-gray-700 cursor-pointer hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
-                      role="menuitem"
-                    >
-                      <span class="flex flex-col">
-                        <span> Profil </span>
-                      </span>
-                    </a>
-                    <a
-                      (click)="handleLogout()"
+                      (click)="onLogout()"
                       class="block px-4 py-2 text-md text-gray-700 cursor-pointer hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
                       role="menuitem"
                     >
@@ -93,6 +82,7 @@
         </div>
         <div class="-mr-2 flex md:hidden">
           <button
+            (click)="onMenuBarsClick()"
             class="text-gray-800 dark:text-white hover:text-gray-300 inline-flex items-center justify-center p-2 rounded-md focus:outline-none"
           >
             <img src="assets/menu-bars.svg" class="h-6 w-6" />
@@ -100,20 +90,36 @@
         </div>
       </div>
     </div>
-    <div class="md:hidden">
+    <div [ngClass]="isMenuOpen ? 'block' : 'hidden'" class="md:hidden">
       <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
         <a
           class="text-gray-300 hover:text-gray-800 dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-          href="/#"
+          href="/"
         >
-          Home
+          Početna
         </a>
         <a
+          *ngIf="isLoggedIn"
           class="text-gray-800 dark:text-white block px-3 py-2 rounded-md text-base font-medium"
-          href="/#"
+          href="/messages"
         >
-          Gallery
+          Poruke
         </a>
+        <a
+          *ngIf="isLoggedIn"
+          (click)="onLogout()"
+          href=""
+          class="text-gray-800 dark:text-white block px-3 py-2 rounded-md text-base font-medium"
+        >
+          Odjava
+        </a>
+        <button
+          (click)="onButtonClick()"
+          type="button"
+          class="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+        >
+          {{ isLoggedIn ? "Novi event" : "Prijava" }}
+        </button>
       </div>
     </div>
   </nav>

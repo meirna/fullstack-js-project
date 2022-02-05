@@ -17,11 +17,17 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder, private service: UserService) {}
 
   form = this.fb.group({
-    username: ['', [Validators.required, Validators.minLength(4)]],
-    password: ['', Validators.required],
+    username: [
+      '',
+      [Validators.required, Validators.minLength(4), Validators.maxLength(255)],
+    ],
+    password: ['', [Validators.required, Validators.maxLength(255)]],
     email: [
       '',
-      [Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$')],
+      [
+        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'),
+        Validators.maxLength(255),
+      ],
     ],
   });
 

@@ -1,7 +1,7 @@
 export class Event {
   constructor(
     public name?: string,
-    public datetime?: Date,
+    public datetime?: Date | string,
     public city?: string,
     public address?: string,
     public description?: string,
@@ -34,7 +34,7 @@ export class Message {
 
 export class User {
   constructor(
-    public username: string,
+    public username?: string,
     public password?: string,
     public image?: string,
     public name?: string,
