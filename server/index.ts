@@ -26,6 +26,10 @@ const server = express()
   .use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader(
+      'Access-Control-Allow-Methods',
+      'POST, GET, PUT, DELETE, OPTIONS'
+    );
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     next();
   })

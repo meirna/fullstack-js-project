@@ -1,41 +1,59 @@
 <app-navbar></app-navbar>
-<div class="grid grid-cols-1 px-8 lg:px-0 mx-auto max-w-2xl">
-  <div
-    *ngIf="event"
-    class="bg-white max-w-2xl shadow overflow-hidden sm:rounded-lg mx-auto"
-  >
-    <div class="w-full bg-cover bg-landscape">
-      <img [src]="event.image | defaultImage" />
-    </div>
+<div class="min-h-screen bg-gray-100 py-20">
+  <div class="grid grid-cols-1 px-8 lg:px-0 mx-auto max-w-2xl">
+    <div
+      *ngIf="event"
+      class="bg-white max-w-2xl shadow overflow-hidden sm:rounded-lg mx-auto"
+    >
+      <div class="w-full bg-cover bg-landscape">
+        <img [src]="event.image | defaultImage" />
+      </div>
 
-    <div class="px-4 py-5 sm:px-6">
-      <p class="max-w-2xl text-sm text-gray-500">
-        {{ event.datetime | date: "fullDate" }}
-      </p>
-      <h3 class="text-lg leading-6 font-medium text-gray-900 my-1">
-        {{ event.name }}
-      </h3>
-      <p class="max-w-2xl text-sm text-gray-500">
-        {{ event.address + ", " + event.city }}
-      </p>
-    </div>
-    <div class="border-t border-gray-200">
-      <dl>
-        <div
-          class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
-        >
-          <dt class="text-sm font-medium text-gray-500">Organizator</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            {{ event.user?.username }}
-          </dd>
-        </div>
-        <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-          <dt class="text-sm font-medium text-gray-500">Opis</dt>
-          <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-            {{ event.description }}
-          </dd>
-        </div>
-      </dl>
+      <div class="px-4 py-5 sm:px-6">
+        <p class="max-w-2xl text-sm text-gray-500">
+          {{ event.datetime | date: "fullDate" }}
+        </p>
+        <h3 class="text-lg leading-6 font-medium text-gray-900 my-1">
+          {{ event.name }}
+        </h3>
+        <p class="max-w-2xl text-sm text-gray-500">
+          {{ event.address + ", " + event.city }}
+        </p>
+      </div>
+      <div class="border-t border-gray-200">
+        <dl>
+          <div
+            class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+          >
+            <dt class="text-sm font-medium text-gray-500">Organizator</dt>
+            <dd
+              class="mt-1 text-sm text-gray-900 sm:mt-0 col-span-2 sm:col-span-1"
+            >
+              {{ event.user?.username }}
+            </dd>
+            <dd
+              *ngIf="event.user?.username == user?.username"
+              class="text-right"
+            >
+              <button
+                (click)="handleEditClicked()"
+                type="button"
+                class="py-2 px-4 mt-4 w-full sm:w-min sm:mt-0 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-cener text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+              >
+                Uredi
+              </button>
+            </dd>
+          </div>
+          <div
+            class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6"
+          >
+            <dt class="text-sm font-medium text-gray-500">Opis</dt>
+            <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+              {{ event.description }}
+            </dd>
+          </div>
+        </dl>
+      </div>
     </div>
   </div>
 </div>

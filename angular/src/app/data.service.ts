@@ -11,6 +11,11 @@ const API = {
   MESSAGES: `${environment.api}/api/messages`,
 };
 
+export type MongoResponse = {
+  acknowleged: string;
+  insertedId: string;
+};
+
 @Injectable({
   providedIn: 'root',
 })
@@ -44,15 +49,21 @@ export class DataService {
   }
 
   postEvent(event: Event) {
-    return this.http.post<Event>(`${API.EVENTS}`, event);
+    return this.http.post<MongoResponse>(`${API.EVENTS}`, event, {
+      withCredentials: true,
+    });
   }
 
   putEvent(event: Event) {
-    return this.http.put<Event>(`${API.EVENTS}`, event);
+    return this.http.put<MongoResponse>(`${API.EVENTS}`, event, {
+      withCredentials: true,
+    });
   }
 
-  deleteEvent(event: Event) {
-    return this.http.delete<Event>(`${API.EVENTS}/${event._id}`);
+  deleteEvent(id: string) {
+    return this.http.delete<Event>(`${API.EVENTS}/${id}`, {
+      withCredentials: true,
+    });
   }
 
   postComment(event: Event, comment: Comment) {

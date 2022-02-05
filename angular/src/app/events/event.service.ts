@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { DataService } from '../data.service';
+import { DataService, MongoResponse } from '../data.service';
 import { Event } from '../models';
 
 @Injectable({
@@ -8,11 +8,9 @@ import { Event } from '../models';
 })
 export class EventService {
   private events?: Event[];
-  private eventsSubject: BehaviorSubject<Event[]> = new BehaviorSubject<
-    Event[]
-  >([]);
+  eventsSubject: BehaviorSubject<Event[]> = new BehaviorSubject<Event[]>([]);
   private event?: Event;
-  private eventSubject: BehaviorSubject<Event> = new BehaviorSubject<Event>(
+  eventSubject: BehaviorSubject<Event> = new BehaviorSubject<Event>(
     new Event()
   );
 
@@ -34,5 +32,31 @@ export class EventService {
     });
 
     return this.eventSubject;
+  }
+
+  createEvent(event: Event) {
+    this.service.postEvent(event).subscribe((res) => {
+      event._id = res.insertedId;
+      this.event = event;
+      this.eventSubject.next({ ...this.event });
+    });
+  }
+
+  updateEvent(event: Event) {
+    this.service.putEvent(event).subscribe((res) => {
+      event._id = res.insertedId;
+      this.event = event;
+      this.eventSubject.next({ ...this.event });
+    });
+  }
+
+  deleteEvent(id: string) {
+    this.service.deleteEvent(id).subscribe((res) => {
+      this.event = new Event();
+      this.eventSubject.next({ ...this.event });
+      const i = this.events?.findIndex((event) => event._id == id);
+      this.events?.splice(i!, 1);
+      this.eventsSubject.next([...this.events!]);
+    });
   }
 }

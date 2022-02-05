@@ -66,7 +66,7 @@ export default class Service {
           }
         );
 
-        return res.status(StatusCodes.OK).send(updated);
+        return res.status(StatusCodes.OK).send({ insertedId: _id });
       }
 
       return res
@@ -110,7 +110,7 @@ export default class Service {
       const { payload } = await jwtVerify(jwt, PUBLIC_KEY, {
         algorithms: ['ES256'],
         issuer: 'NJP',
-        maxTokenAge: '1h',
+        maxTokenAge: '2h',
       });
       res.locals.username = payload.username;
 
