@@ -14,10 +14,10 @@ export class Event {
 
 export class Comment {
   constructor(
-    public user: User,
     public eventId: string,
     public text: string,
-    public timestamp: Date,
+    public user?: User,
+    public timestamp?: Date,
     public _id?: string
   ) {}
 }

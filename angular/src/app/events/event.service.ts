@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { DataService, MongoResponse } from '../data.service';
-import { Event } from '../models';
+import { Comment, Event } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -57,6 +57,13 @@ export class EventService {
       const i = this.events?.findIndex((event) => event._id == id);
       this.events?.splice(i!, 1);
       this.eventsSubject.next([...this.events!]);
+    });
+  }
+
+  createComment(comment: Comment) {
+    this.service.postComment(comment).subscribe((res) => {
+      this.event?.comments?.push(res);
+      this.eventSubject.next({ ...this.event });
     });
   }
 }

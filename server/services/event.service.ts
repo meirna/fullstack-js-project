@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { ReasonPhrases, StatusCodes } from 'http-status-codes';
-import { ObjectId, Collection, Document } from 'mongodb';
+import { StatusCodes } from 'http-status-codes';
+import { ObjectId } from 'mongodb';
 
 import mongo from '../db/db';
 import { Event } from '../db/models';
@@ -17,29 +17,22 @@ class EventService extends Service {
       ...req.body,
       user: await this.loadUser(res.locals.username),
       eventId: req.params.id,
+      timestamp: new Date(),
     };
 
     try {
       const collection = await this.model.collection();
-      if (await this.authorize(collection, req.params.id, res)) {
-        const db = await mongo.db();
-        const { insertedId } = await db
-          .collection('comments')
-          .insertOne(comment);
+      const db = await mongo.db();
+      const { insertedId } = await db.collection('comments').insertOne(comment);
 
-        const updated = await collection.updateOne(
-          { _id: new ObjectId(req.params.id) },
-          {
-            $push: { comments: { ...comment, _id: new ObjectId(insertedId) } },
-          }
-        );
+      const updated = await collection.updateOne(
+        { _id: new ObjectId(req.params.id) },
+        {
+          $push: { comments: { ...comment, _id: new ObjectId(insertedId) } },
+        }
+      );
 
-        return res.status(StatusCodes.OK).send();
-      }
-
-      return res
-        .status(StatusCodes.UNAUTHORIZED)
-        .send(ReasonPhrases.UNAUTHORIZED);
+      return res.status(StatusCodes.OK).send({ ...comment, _id: insertedId });
     } catch (err) {
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send();
     }

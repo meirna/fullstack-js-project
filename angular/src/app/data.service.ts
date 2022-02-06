@@ -66,10 +66,13 @@ export class DataService {
     });
   }
 
-  postComment(event: Event, comment: Comment) {
+  postComment(comment: Comment) {
     return this.http.post<Comment>(
-      `${API.EVENTS}/${event._id}/comment`,
-      comment
+      `${API.EVENTS}/${comment.eventId}/comment`,
+      comment,
+      {
+        withCredentials: true,
+      }
     );
   }
 
