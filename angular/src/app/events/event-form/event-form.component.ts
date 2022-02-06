@@ -20,8 +20,7 @@ export class EventFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private service: EventService,
-    private route: ActivatedRoute,
-    private router: Router
+    private route: ActivatedRoute
   ) {}
 
   form = this.fb.group({

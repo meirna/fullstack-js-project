@@ -18,7 +18,9 @@ export class UserService {
     private service: DataService,
     private cookieService: CookieService
   ) {
-    this.getUser();
+    if (!this.user?.username) {
+      this.getUser();
+    }
     this.behaviorSubject.next(this.user?.username ? { ...this.user } : false);
   }
 
