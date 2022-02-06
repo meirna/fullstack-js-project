@@ -1,14 +1,8 @@
-import Controller from './controller';
-import UserService from '../services/user.service';
+import { Router } from 'express';
 
-class UserController extends Controller {
-  constructor(service: any) {
-    super(service);
-    this.router
-      .post('/login', service.login)
-      .post('/logout', service.logout)
-      .post('/register', service.register);
-  }
-}
+import { login, logout, register } from '../services/user.service';
 
-export default new UserController(UserService);
+export default Router()
+  .post('/login', login)
+  .post('/logout', logout)
+  .post('/register', register);

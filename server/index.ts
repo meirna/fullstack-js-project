@@ -9,7 +9,6 @@ import mongo from './db/db';
 import eventController from './controllers/event.controller';
 import userController from './controllers/user.controller';
 import messageController from './controllers/message.controller';
-import commentController from './controllers/comment.controller';
 
 export const PUBLIC_KEY = createPublicKey({
   key: readFileSync('./public.pem').toString(),
@@ -36,10 +35,9 @@ const server = express()
   // .use(helmet())
   /*.use(express.static(path.join(__dirname, '../frontend/dist'))) */
   .use('/assets', express.static(path.join(__dirname, './assets/images')))
-  .use('/api/events', eventController.router)
-  .use('/api/comments', commentController.router)
-  .use('/api/messages', messageController.router)
-  .use('/api/users', userController.router);
+  .use('/api/events', eventController)
+  .use('/api/messages', messageController)
+  .use('/api/users', userController);
 
 mongo
   .db()

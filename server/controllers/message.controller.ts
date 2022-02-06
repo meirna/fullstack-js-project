@@ -1,10 +1,9 @@
-import Controller from './controller';
-import MessageService from '../services/message.service';
+import { Router } from 'express';
 
-class MessageController extends Controller {
-  constructor(service) {
-    super(service);
-  }
-}
+import { getAll, get, insert } from '../services/message.service';
+import { verifyToken } from '../services/service';
 
-export default new MessageController(MessageService);
+export default Router()
+  .get('/', verifyToken, getAll)
+  .get('/:username', verifyToken, get)
+  .post('/:username', verifyToken, insert);

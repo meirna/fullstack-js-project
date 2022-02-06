@@ -1,11 +1,19 @@
-import Controller from './controller';
-import EventService from '../services/event.service';
+import { Router } from 'express';
 
-class EventController extends Controller {
-  constructor(service: any) {
-    super(service);
-    this.router.post('/:id/comment', service.verifyToken, service.postComment);
-  }
-}
+import {
+  get,
+  getAll,
+  insert,
+  postComment,
+  remove,
+  update,
+} from '../services/event.service';
+import { verifyToken } from '../services/service';
 
-export default new EventController(EventService);
+export default Router()
+  .get('/', getAll)
+  .post('/', verifyToken, insert)
+  .put(`/`, verifyToken, update)
+  .get(`/:id`, get)
+  .post(`/:id/comment`, verifyToken, postComment)
+  .delete(`/:id`, verifyToken, remove);
