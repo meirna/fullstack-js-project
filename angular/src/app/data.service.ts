@@ -12,7 +12,6 @@ const API = {
 };
 
 export type MongoResponse = {
-  acknowleged: string;
   insertedId: string;
 };
 
@@ -77,10 +76,24 @@ export class DataService {
   }
 
   getMessages() {
-    return this.http.get<Message[]>(`${API.MESSAGES}`);
+    return this.http.get<Message[]>(`${API.MESSAGES}`, {
+      withCredentials: true,
+    });
+  }
+
+  getConversation(username: string) {
+    return this.http.get<Message[]>(`${API.MESSAGES}/${username}`, {
+      withCredentials: true,
+    });
   }
 
   postMessage(message: Message) {
-    return this.http.post<Message>(`${API.MESSAGES}`, message);
+    return this.http.post<Message>(
+      `${API.MESSAGES}/${message.username}`,
+      message,
+      {
+        withCredentials: true,
+      }
+    );
   }
 }

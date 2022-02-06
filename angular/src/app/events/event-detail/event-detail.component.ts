@@ -34,9 +34,13 @@ export class EventDetailComponent implements OnInit {
     this.user = this.userService.getUser();
   }
 
-  handleEditClicked() {
+  onEditClick() {
     this.eventSubject?.next(this.event!);
     this.router.navigate([`/events/${this.event?._id}/edit`]);
+  }
+
+  onUsernameClick() {
+    if (this.user?.username) this.router.navigate([`/messages`]);
   }
 
   ngOnDestroy() {

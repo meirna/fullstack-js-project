@@ -24,10 +24,9 @@ export class Comment {
 
 export class Message {
   constructor(
-    public user: User,
-    public recipient: User,
-    public text: string,
-    public timestamp: Date,
+    public username?: string,
+    public text?: string,
+    public timestamp?: Date,
     public _id?: string
   ) {}
 }

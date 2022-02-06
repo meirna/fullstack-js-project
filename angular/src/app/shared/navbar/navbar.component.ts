@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Event } from 'src/app/models';
 import { UserService } from 'src/app/user.service';
-import { EventService } from '../event.service';
+import { EventService } from '../../events/event.service';
 
 @Component({
   selector: 'app-navbar',

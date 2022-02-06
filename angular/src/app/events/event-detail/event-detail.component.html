@@ -27,6 +27,8 @@
           >
             <dt class="text-sm font-medium text-gray-500">Organizator</dt>
             <dd
+              (click)="onUsernameClick()"
+              [ngClass]="user?.username ? 'cursor-pointer font-medium' : ''"
               class="mt-1 text-sm text-gray-900 sm:mt-0 col-span-2 sm:col-span-1"
             >
               {{ event.user?.username }}
@@ -36,7 +38,7 @@
               class="text-right"
             >
               <button
-                (click)="handleEditClicked()"
+                (click)="onEditClick()"
                 type="button"
                 class="py-2 px-4 mt-4 w-full sm:w-min sm:mt-0 bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white transition ease-in duration-200 text-cener text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
               >
