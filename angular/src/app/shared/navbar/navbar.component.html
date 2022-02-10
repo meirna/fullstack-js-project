@@ -16,7 +16,7 @@
               </a>
               <a
                 class="text-gray-800 dark:text-white hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                href="/#"
+                href="/"
               >
                 Gallery
               </a>
@@ -25,7 +25,7 @@
         </div>
         <div class="hidden md:block">
           <div class="ml-4 flex items-center md:ml-6">
-            <a class="mr-5">
+            <div class="mr-4">
               <button
                 (click)="onButtonClick()"
                 type="button"
@@ -33,16 +33,24 @@
               >
                 {{ isLoggedIn ? "Novi event" : "Prijava" }}
               </button>
-            </a>
-            <a
+            </div>
+            <div
               *ngIf="isLoggedIn"
-              routerLink="/messages"
               class="block p-1 rounded-full text-gray-400 focus:outline-none hover:text-gray-200 focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
             >
-              <span class="sr-only"> Poruke </span>
-              <img src="assets/inbox.svg" class="h-6 w-6" />
-            </a>
-            <div *ngIf="isLoggedIn" class="ml-3">
+              <div class="relative inline-block text-left">
+                <button
+                  (click)="onMessagesClick()"
+                  type="button"
+                  class="flex items-center justify-center w-full rounded-md px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-50 hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500"
+                  id="options-menu"
+                >
+                  <span class="sr-only"> Poruke </span>
+                  <img src="assets/inbox.svg" class="h-6 w-6" />
+                </button>
+              </div>
+            </div>
+            <div *ngIf="isLoggedIn">
               <div class="relative inline-block text-left">
                 <div>
                   <button

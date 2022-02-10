@@ -32,6 +32,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
   }
 
+  onMessagesClick() {
+    this.router.navigate(['/messages']);
+  }
+
   onProfileClick() {
     this.isProfileOpen = !this.isProfileOpen;
   }

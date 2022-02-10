@@ -89,7 +89,7 @@ export class DataService {
 
   postMessage(message: Message) {
     return this.http.post<Message>(
-      `${API.MESSAGES}/${message.username}`,
+      `${API.MESSAGES}/${message.recipient?.username}`,
       message,
       {
         withCredentials: true,

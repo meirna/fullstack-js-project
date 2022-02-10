@@ -4,6 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { DataService } from './data.service';
 import { User } from './models';
 import { HttpResponse } from '@angular/common/http';
+import { MessageService } from './messages/message.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,8 @@ export class UserService {
 
   constructor(
     private service: DataService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private messageService: MessageService
   ) {
     if (!this.user?.username) {
       this.getUser();
@@ -72,6 +74,7 @@ export class UserService {
       )
       .subscribe((res) => {
         this.user = undefined;
+        this.messageService.clear();
         this.behaviorSubject.next(false);
         this.cookieService.delete('user');
       });

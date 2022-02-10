@@ -24,7 +24,8 @@ export class Comment {
 
 export class Message {
   constructor(
-    public username?: string,
+    public user?: User,
+    public recipient?: User,
     public text?: string,
     public timestamp?: Date,
     public _id?: string

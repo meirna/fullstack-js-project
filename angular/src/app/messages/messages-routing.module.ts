@@ -4,8 +4,16 @@ import { ConversationComponent } from './conversation/conversation.component';
 import { HomepageComponent } from './homepage/homepage.component';
 
 const routes: Routes = [
-  { path: ':username', component: ConversationComponent },
-  { path: '', component: HomepageComponent, pathMatch: 'full' },
+  {
+    path: '',
+    component: HomepageComponent,
+    children: [
+      {
+        path: ':username',
+        component: ConversationComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({

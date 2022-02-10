@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 
-import { Message } from '../db/models';
+import { Message, User } from '../db/models';
 import { loadUser } from './service';
 
 export async function getAll(req: Request, res: Response) {
@@ -9,13 +9,54 @@ export async function getAll(req: Request, res: Response) {
     const collection = await new Message().collection();
     const items = await collection
       .aggregate([
-        { $match: { 'user.username': res.locals.username } },
-        { $group: { _id: '$recipient' } },
-        { $project: { _id: 0, recipient: '$_id' } },
+        {
+          $match: {
+            $or: [
+              { 'user.username': res.locals.username },
+              { 'recipient.username': res.locals.username },
+            ],
+          },
+        },
+        {
+          $group: {
+            _id: { recipient: '$recipient', user: '$user' },
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            u1: {
+              $cond: {
+                if: { $ne: ['$_id.recipient.username', res.locals.username] },
+                then: '$_id.recipient',
+                else: '$$REMOVE',
+              },
+            },
+            u2: {
+              $cond: {
+                if: { $ne: ['$_id.user.username', res.locals.username] },
+                then: '$_id.user',
+                else: '$$REMOVE',
+              },
+            },
+          },
+        },
       ])
       .toArray();
 
-    return res.status(StatusCodes.OK).send(items);
+    const set = new Set();
+    items.forEach((item) =>
+      Object.values(item).forEach((value) => set.add(JSON.stringify(value)))
+    );
+    const messages: Message[] = [];
+    set.forEach((u: any) => {
+      const user = JSON.parse(u);
+      messages.push(
+        new Message(new User(user.username, undefined, undefined, user.image))
+      );
+    });
+
+    return res.status(StatusCodes.OK).send(messages);
   } catch (err) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send();
   }
@@ -26,8 +67,16 @@ export async function get(req: Request, res: Response) {
     const collection = await new Message().collection();
     const items = await collection
       .find({
-        'user.username': res.locals.username,
-        'recipient.username': req.params.username,
+        $or: [
+          {
+            'user.username': res.locals.username,
+            'recipient.username': req.params.username,
+          },
+          {
+            'user.username': req.params.username,
+            'recipient.username': res.locals.username,
+          },
+        ],
       })
       .toArray();
 

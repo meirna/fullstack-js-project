@@ -16,7 +16,9 @@ export class MessageService {
     Message[]
   >([]);
 
-  constructor(private service: DataService) {
+  constructor(private service: DataService) {}
+
+  getMessages() {
     this.service.getMessages().subscribe((res) => {
       this.messages = res;
       this.messagesSubject.next([...this.messages]);
@@ -35,5 +37,12 @@ export class MessageService {
       this.conversation?.push(message);
       this.conversationSubject.next([...this.conversation!]);
     });
+  }
+
+  clear() {
+    this.messages = [];
+    this.messagesSubject.next([...this.messages]);
+    this.conversation = [];
+    this.conversationSubject.next([...this.conversation]);
   }
 }
