@@ -27,11 +27,20 @@
           >
             <dt class="text-sm font-medium text-gray-500">Organizator</dt>
             <dd
-              (click)="onUsernameClick()"
-              [ngClass]="user?.username ? 'cursor-pointer font-medium' : ''"
+              [ngClass]="
+                user?.username && event.user?.username != user?.username
+                  ? 'cursor-pointer font-medium'
+                  : ''
+              "
               class="mt-1 text-sm text-gray-900 sm:mt-0 col-span-2 sm:col-span-1"
             >
-              {{ event.user?.username }}
+              <app-user-link
+                *ngIf="event.user?.username != user?.username"
+                [user]="event.user"
+              ></app-user-link>
+              <span *ngIf="event.user?.username == user?.username">{{
+                event.user?.username
+              }}</span>
             </dd>
             <dd
               *ngIf="event.user?.username === user?.username"

@@ -34,8 +34,6 @@ export class EventFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscription = this.service.eventSubject.subscribe((res) => {
-      console.log(res);
-
       if (res) {
         this.error = false;
         this.event = res;
