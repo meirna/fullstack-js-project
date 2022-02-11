@@ -5,9 +5,15 @@ import { MessagesRoutingModule } from './messages-routing.module';
 import { HomepageComponent } from './homepage/homepage.component';
 import { ConversationComponent } from './conversation/conversation.component';
 import { SharedModule } from '../shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [HomepageComponent, ConversationComponent],
-  imports: [CommonModule, MessagesRoutingModule, SharedModule],
+  imports: [
+    CommonModule,
+    MessagesRoutingModule,
+    SharedModule,
+    ReactiveFormsModule,
+  ],
 })
 export class MessagesModule {}

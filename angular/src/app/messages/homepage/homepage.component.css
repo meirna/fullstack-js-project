@@ -1,3 +1,13 @@
-.h-screen {
+.h-conversation {
   height: calc(100vh - 4rem);
+}
+
+.w-conversation {
+  width: calc(100vw - 24rem);
+}
+
+@media (min-width: 1280px) {
+  .h-conversation {
+    height: calc(100vh - 7rem);
+  }
 }

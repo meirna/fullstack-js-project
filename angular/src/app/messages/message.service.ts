@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, catchError, of } from 'rxjs';
 import { DataService } from '../data.service';
 import { Message } from '../models';
 
@@ -12,9 +12,8 @@ export class MessageService {
     []
   );
   private conversation?: Message[];
-  conversationSubject: BehaviorSubject<Message[]> = new BehaviorSubject<
-    Message[]
-  >([]);
+  conversationSubject: BehaviorSubject<Message[] | undefined> =
+    new BehaviorSubject<Message[] | undefined>([]);
 
   constructor(private service: DataService) {}
 
@@ -33,9 +32,17 @@ export class MessageService {
   }
 
   postMessage(message: Message) {
-    this.service.postMessage(message).subscribe((res) => {
-      this.conversation?.push(message);
-      this.conversationSubject.next([...this.conversation!]);
-    });
+    this.service
+      .postMessage(message)
+      .pipe(
+        catchError((err) => {
+          this.conversationSubject.next(undefined);
+          return of();
+        })
+      )
+      .subscribe((res) => {
+        this.conversation?.push(message);
+        this.conversationSubject.next([...this.conversation!]);
+      });
   }
 }
