@@ -1,15 +1,23 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
 import { BehaviorSubject, catchError, of } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { DataService } from './data.service';
 import { User } from './models';
-import { HttpResponse } from '@angular/common/http';
-import { MessageService } from './messages/message.service';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  CanLoad,
+  Route,
+  Router,
+  RouterStateSnapshot,
+  UrlSegment,
+} from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
+export class UserService implements CanLoad, CanActivate {
   private user?: User;
   behaviorSubject: BehaviorSubject<User | boolean> = new BehaviorSubject<
     User | boolean
@@ -18,7 +26,7 @@ export class UserService {
   constructor(
     private service: DataService,
     private cookieService: CookieService,
-    private messageService: MessageService
+    private router: Router
   ) {
     if (!this.user?.username) {
       this.getUser();
@@ -74,9 +82,26 @@ export class UserService {
       )
       .subscribe((res) => {
         this.user = undefined;
-        this.messageService.clear();
         this.behaviorSubject.next(false);
         this.cookieService.delete('user');
+        window.location.reload();
       });
+  }
+
+  canLoad(route: Route, segments: UrlSegment[]): boolean {
+    return this.authorize();
+  }
+
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean {
+    return this.authorize();
+  }
+
+  private authorize() {
+    if (this.user?.username) return true;
+    this.router.navigateByUrl('');
+    return false;
   }
 }
