@@ -12,10 +12,10 @@ import { UserService } from 'src/app/user.service';
 })
 export class EventDetailComponent implements OnInit {
   event?: Event;
-  eventSubject?: BehaviorSubject<Event>;
+  eventSubject?: BehaviorSubject<Event | undefined>;
   eventSubscription?: Subscription;
   user?: User;
-  isEdit = false;
+  error = false;
 
   constructor(
     private service: EventService,
@@ -29,7 +29,8 @@ export class EventDetailComponent implements OnInit {
       this.route.snapshot.paramMap.get('id')!
     );
     this.eventSubscription = this.eventSubject.subscribe((res) => {
-      this.event = res;
+      if (res) this.event = res;
+      else this.error = true;
     });
     this.user = this.userService.getUser();
   }

@@ -49,18 +49,21 @@ export class DataService {
 
   postEvent(event: Event) {
     return this.http.post<MongoResponse>(`${API.EVENTS}`, event, {
+      observe: 'response',
       withCredentials: true,
     });
   }
 
   putEvent(event: Event) {
     return this.http.put<MongoResponse>(`${API.EVENTS}`, event, {
+      observe: 'response',
       withCredentials: true,
     });
   }
 
   deleteEvent(id: string) {
     return this.http.delete<Event>(`${API.EVENTS}/${id}`, {
+      observe: 'response',
       withCredentials: true,
     });
   }
@@ -70,6 +73,7 @@ export class DataService {
       `${API.EVENTS}/${comment.eventId}/comment`,
       comment,
       {
+        observe: 'response',
         withCredentials: true,
       }
     );
@@ -92,6 +96,7 @@ export class DataService {
       `${API.MESSAGES}/${message.recipient?.username}`,
       message,
       {
+        observe: 'response',
         withCredentials: true,
       }
     );

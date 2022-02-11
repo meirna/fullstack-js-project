@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Event } from 'src/app/models';
 import { EventService } from '../event.service';
@@ -12,9 +12,10 @@ import { EventService } from '../event.service';
 })
 export class EventFormComponent implements OnInit {
   event?: Event;
-  eventSubject?: BehaviorSubject<Event>;
+  eventSubject?: BehaviorSubject<Event | undefined>;
   subscription?: Subscription;
   submitted = false;
+  deleted = false;
   error = false;
 
   constructor(
@@ -76,12 +77,19 @@ export class EventFormComponent implements OnInit {
 
       if (this.event?._id) this.service.updateEvent(created);
       else this.service.createEvent(created);
+      window.scroll({
+        top: 0,
+      });
     }
   }
 
   onDelete() {
     this.submitted = true;
+    this.deleted = true;
     this.service.deleteEvent(this.event?._id!);
+    window.scroll({
+      top: 0,
+    });
   }
 
   ngOnDestroy() {

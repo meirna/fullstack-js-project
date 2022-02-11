@@ -4,7 +4,7 @@ import { ObjectId } from 'mongodb';
 
 import mongo from '../db/db';
 import { Event } from '../db/models';
-import { loadUser } from './service';
+import { authorize, loadUser } from './service';
 
 export async function postComment(req: Request, res: Response) {
   const comment = {
@@ -62,7 +62,7 @@ export async function insert({ body: data }: Request, res: Response) {
       user: await loadUser(res.locals.username),
     });
 
-    return res.status(StatusCodes.CREATED).send(insertedId);
+    return res.status(StatusCodes.CREATED).send({ insertedId: insertedId });
   } catch (err) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send();
   }
@@ -71,7 +71,7 @@ export async function insert({ body: data }: Request, res: Response) {
 export async function update({ body: data }: Request, res: Response) {
   try {
     const collection = await new Event().collection();
-    if (await this.authorize(collection, data._id, res)) {
+    if (await authorize(collection, data._id, res)) {
       const { _id, ...rest } = data;
       const updated = await collection.updateOne(
         { _id: new ObjectId(data._id) },
@@ -94,7 +94,7 @@ export async function update({ body: data }: Request, res: Response) {
 export async function remove({ params: { id } }: Request, res: Response) {
   try {
     const collection = await new Event().collection();
-    if (await this.authorize(collection, id, res)) {
+    if (await authorize(collection, id, res)) {
       const item = await collection.deleteOne({ _id: new ObjectId(id) });
 
       return res.status(StatusCodes.OK).send(item);

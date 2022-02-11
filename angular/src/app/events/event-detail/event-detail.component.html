@@ -72,6 +72,7 @@
         <div class="antialiased mx-auto max-w-screen-sm px-4 py-4">
           <h3 class="mb-4 text-lg font-semibold text-gray-900">Komentari</h3>
           <div class="flex flex-col space-y-4">
+            <app-alert-error *ngIf="error"></app-alert-error>
             <app-comment
               *ngFor="let comment of event.comments"
               [comment]="comment"

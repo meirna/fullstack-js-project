@@ -1,6 +1,16 @@
 <app-navbar></app-navbar>
 <div class="min-h-screen bg-gray-100 md:py-10">
   <div class="px-4 py-8 md:px-6 lg:px-8 max-w-5xl mx-auto">
+    <!-- <div
+      *ngIf="submitted && error && event"
+      class="surface-card bg-white p-4 shadow rounded-md w-full lg:w-1/2 mx-auto"
+    >
+      <div class="text-center mb-5">
+        <div class="text-900 text-xl font-medium">
+          {{ "Došlo je do greške." }}
+        </div>
+      </div>
+    </div> -->
     <div *ngIf="!submitted || error" class="md:grid md:grid-cols-3 md:gap-6">
       <div class="md:col-span-1">
         <div class="px-4 sm:px-0">
@@ -179,6 +189,9 @@
                   </div>
                 </div>
               </div>
+              <app-alert-error
+                *ngIf="submitted && error && event"
+              ></app-alert-error>
             </div>
             <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
               <button
@@ -206,7 +219,7 @@
     </div>
 
     <div
-      *ngIf="submitted && event"
+      *ngIf="submitted && !error && event"
       class="surface-card bg-white p-4 shadow rounded-md w-full lg:w-1/2 mx-auto"
     >
       <div class="text-center mb-5">
@@ -219,12 +232,12 @@
           class="h-9 mx-auto mb-3"
         />
         <div class="text-900 text-3xl font-medium mb-3">
-          {{ event._id ? "Događaj je objavljen." : "Događaj je obrisan." }}
+          {{ deleted ? "Događaj je obrisan." : "Događaj je objavljen." }}
         </div>
         <a
-          [routerLink]="event._id ? '/events/' + event._id : '/'"
+          [routerLink]="deleted ? '/' : '/events/' + event._id"
           class="font-medium no-underline ml-2 text-blue-500 cursor-pointer"
-          >{{ event._id ? "Pogledaj objavu" : "Idi na početnu stranicu" }}</a
+          >{{ deleted ? "Idi na početnu stranicu" : "Pogledaj objavu" }}</a
         >
       </div>
     </div>
