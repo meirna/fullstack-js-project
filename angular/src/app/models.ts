@@ -5,7 +5,7 @@ export class Event {
     public city?: string,
     public address?: string,
     public description?: string,
-    public image?: string,
+    public image?: Image,
     public comments?: Comment[],
     public user?: User,
     public _id?: string
@@ -41,4 +41,8 @@ export class User {
     public email?: string,
     public _id?: string
   ) {}
+}
+
+export class Image {
+  constructor(public name?: string, public data?: string) {}
 }

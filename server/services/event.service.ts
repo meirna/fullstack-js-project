@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { unlink, writeFile } from 'fs';
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
 import { ObjectId } from 'mongodb';
 
@@ -56,9 +57,11 @@ export async function getAll(req: Request, res: Response) {
 
 export async function insert({ body: data }: Request, res: Response) {
   try {
+    let event: Event = data as Event;
+    if (event.image.data) event = await saveImageFile(event);
     const collection = await new Event().collection();
     const { insertedId } = await collection.insertOne({
-      ...data,
+      ...(event as any),
       user: await loadUser(res.locals.username),
     });
 
@@ -72,7 +75,9 @@ export async function update({ body: data }: Request, res: Response) {
   try {
     const collection = await new Event().collection();
     if (await authorize(collection, data._id, res)) {
-      const { _id, ...rest } = data;
+      let event: Event = data as Event;
+      if (event.image?.data) event = await saveImageFile(event);
+      const { _id, ...rest } = event;
       const updated = await collection.updateOne(
         { _id: new ObjectId(data._id) },
         {
@@ -95,9 +100,14 @@ export async function remove({ params: { id } }: Request, res: Response) {
   try {
     const collection = await new Event().collection();
     if (await authorize(collection, id, res)) {
-      const item = await collection.deleteOne({ _id: new ObjectId(id) });
-
-      return res.status(StatusCodes.OK).send(item);
+      const item = await collection.findOne({
+        $and: [{ _id: new ObjectId(id) }, { image: { $exists: true } }],
+      });
+      if (item) await deleteImageFile(item);
+      const deleted = await collection.deleteOne({ _id: new ObjectId(id) });
+      const db = await mongo.db();
+      await db.collection('comments').deleteMany({ eventId: new ObjectId(id) });
+      return res.status(StatusCodes.OK).send(deleted);
     }
 
     return res
@@ -106,4 +116,31 @@ export async function remove({ params: { id } }: Request, res: Response) {
   } catch (err) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send();
   }
+}
+
+function saveImageFile(event: Event): Promise<any> {
+  return new Promise<any>((resolve, reject) => {
+    const matches = event.image.data.match(
+      /^data:([A-Za-z-+\/]+);base64,(.+)$/
+    );
+
+    writeFile(
+      `./${process.env.IMAGES_URL}/${event.image.name}`,
+      matches[2],
+      'base64',
+      (err) => {
+        if (err) return reject();
+        resolve({ ...event, image: { name: event.image.name } });
+      }
+    );
+  });
+}
+
+function deleteImageFile(event: any): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
+    unlink(`./${process.env.IMAGES_URL}/${event.image.name}`, (err) => {
+      if (err) return reject();
+      resolve();
+    });
+  });
 }

@@ -6,7 +6,7 @@
       class="bg-white max-w-2xl shadow overflow-hidden sm:rounded-lg mx-auto"
     >
       <div class="w-full bg-cover bg-landscape">
-        <img [src]="event.image | defaultImage" />
+        <img [src]="event.image?.name | defaultImage" />
       </div>
 
       <div

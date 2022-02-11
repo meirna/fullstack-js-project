@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { Event } from 'src/app/models';
+import { Event, Image } from 'src/app/models';
 import { EventService } from '../event.service';
 
 @Component({
@@ -14,6 +14,7 @@ export class EventFormComponent implements OnInit {
   event?: Event;
   eventSubject?: BehaviorSubject<Event | undefined>;
   subscription?: Subscription;
+  image?: Image;
   submitted = false;
   deleted = false;
   error = false;
@@ -61,7 +62,27 @@ export class EventFormComponent implements OnInit {
     }
   }
 
-  onFileChanged(event: any) {}
+  onFileChanged(e: any) {
+    this.image = undefined;
+    const file = e.target.files[0];
+
+    if (
+      (file.type === 'image/png' ||
+        file.type === 'image/jpeg' ||
+        file.type === 'image/jpg') &&
+      file.size / (1024 * 1024) <= 2
+    ) {
+      this.error = false;
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.image = new Image(file.name, reader.result as string);
+      };
+    } else {
+      e.target.value = '';
+      this.error = true;
+    }
+  }
 
   onSubmit() {
     if (this.form.valid) {
@@ -71,7 +92,8 @@ export class EventFormComponent implements OnInit {
         this.form.value.datetime,
         this.form.value.city,
         this.form.value.address,
-        this.form.value.description
+        this.form.value.description,
+        this.image
       );
       created._id = this.event?._id;
 

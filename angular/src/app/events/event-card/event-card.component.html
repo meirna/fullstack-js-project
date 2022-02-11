@@ -4,7 +4,7 @@
     class="flex flex-col max-w-md mx-auto bg-white shadow hover:shadow-sm rounded-lg overflow-hidden cursor-pointer"
   >
     <div class="w-full bg-cover bg-landscape">
-      <img [src]="event.image | defaultImage" />
+      <img [src]="event.image?.name | defaultImage" />
     </div>
     <div class="w-full p-4 min-h-full">
       <p class="text-gray-600 font-semibold text-sm">

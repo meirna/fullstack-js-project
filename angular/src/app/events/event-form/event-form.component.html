@@ -150,6 +150,11 @@
                 >
                   Slika
                 </label>
+                <img
+                  *ngIf="event?.image"
+                  [src]="event?.image?.name | defaultImage"
+                  class="w-64 mx-auto my-2"
+                />
                 <div
                   class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md"
                 >
@@ -168,20 +173,21 @@
                         stroke-linejoin="round"
                       />
                     </svg>
-                    <div class="flex text-sm text-gray-600">
+                    <div class="flex text-sm text-gray-600 items-center">
                       <label
                         for="image"
-                        class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
+                        class="cursor-pointer mx-auto bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500"
                       >
                         <span>Učitaj sliku</span>
                         <input
                           formControlName="image"
+                          id="image"
                           type="file"
                           class="sr-only"
                           (change)="onFileChanged($event)"
                         />
                       </label>
-                      <p class="pl-1">*dolazi uskoro</p>
+                      <p *ngIf="image" class="pl-1">{{ image.name }}</p>
                     </div>
                     <p class="text-xs text-gray-500">
                       JPG ili PNG do 2MB veličine
@@ -189,9 +195,7 @@
                   </div>
                 </div>
               </div>
-              <app-alert-error
-                *ngIf="submitted && error && event"
-              ></app-alert-error>
+              <app-alert-error *ngIf="error"></app-alert-error>
             </div>
             <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
               <button

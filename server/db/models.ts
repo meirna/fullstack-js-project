@@ -13,7 +13,7 @@ export class Event extends Model {
     public city: string = '',
     public address: string = '',
     public description?: string,
-    public image?: string,
+    public image?: Image,
     public comments?: Comment[],
     public user?: User,
     public _id?: string
@@ -78,4 +78,8 @@ export class User extends Model {
     const db = await mongo.db();
     return db.collection('users');
   }
+}
+
+export class Image {
+  constructor(public name?: string, public data?: string) {}
 }

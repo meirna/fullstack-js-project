@@ -12,17 +12,17 @@ import userController from './controllers/user.controller';
 import messageController from './controllers/message.controller';
 
 export const PUBLIC_KEY = createPublicKey({
-  key: readFileSync('./public.pem').toString(),
+  key: readFileSync(`./${process.env.PUBLIC_KEY}`).toString(),
 });
 export const PRIVATE_KEY = createPrivateKey({
-  key: readFileSync('./private.pem').toString(),
+  key: readFileSync(`./${process.env.PRIVATE_KEY}`).toString(),
 });
 
 let app: Server;
 
 const server = express()
   .use(compression())
-  .use(express.json())
+  .use(express.json({ limit: '3mb' }))
   // TODO: remove after prod build
   .use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'http://localhost:4200');

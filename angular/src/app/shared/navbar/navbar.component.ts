@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Event, User } from 'src/app/models';
 import { UserService } from 'src/app/user.service';
 import { EventService } from '../../events/event.service';
@@ -20,7 +20,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService,
     private eventService: EventService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
