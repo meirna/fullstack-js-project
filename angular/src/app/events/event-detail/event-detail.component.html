@@ -72,7 +72,10 @@
               *ngFor="let comment of event.comments"
               [comment]="comment"
             ></app-comment>
-            <app-comment-form [event]="event"></app-comment-form>
+            <app-comment-form
+              *ngIf="user?.username"
+              [event]="event"
+            ></app-comment-form>
           </div>
         </div>
       </div>

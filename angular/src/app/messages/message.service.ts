@@ -38,11 +38,4 @@ export class MessageService {
       this.conversationSubject.next([...this.conversation!]);
     });
   }
-
-  clear() {
-    this.messages = [];
-    this.messagesSubject.next([...this.messages]);
-    this.conversation = [];
-    this.conversationSubject.next([...this.conversation]);
-  }
 }

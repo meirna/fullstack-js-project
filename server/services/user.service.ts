@@ -73,7 +73,7 @@ async function generateJWT(username: string) {
     .setProtectedHeader({ alg: 'ES256' })
     .setIssuer('NJP')
     .setIssuedAt(Math.round(Date.now() / 1000))
-    .setExpirationTime('1h')
+    .setExpirationTime('6h')
     .sign(PRIVATE_KEY);
 
   return jwt;

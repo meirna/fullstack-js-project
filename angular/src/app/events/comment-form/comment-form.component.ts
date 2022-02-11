@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Comment, Event } from 'src/app/models';
 import { EventService } from '../event.service';
@@ -8,7 +8,7 @@ import { EventService } from '../event.service';
   templateUrl: './comment-form.component.html',
   styleUrls: ['./comment-form.component.css'],
 })
-export class CommentFormComponent implements OnInit {
+export class CommentFormComponent {
   @Input() event?: Event;
 
   constructor(private fb: FormBuilder, private service: EventService) {}
@@ -16,8 +16,6 @@ export class CommentFormComponent implements OnInit {
   form = this.fb.group({
     text: ['', [Validators.required, Validators.maxLength(255)]],
   });
-
-  ngOnInit(): void {}
 
   onSubmit() {
     if (this.form.valid) {

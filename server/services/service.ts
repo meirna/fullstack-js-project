@@ -7,16 +7,13 @@ import mongo from '../db/db';
 import { PUBLIC_KEY } from '../index';
 
 export async function verifyToken(req: Request, res: Response, next: Function) {
-  const cookies = req.headers.cookie.split(';').reduce((res, item) => {
+  const cookies = req.headers.cookie?.split(';').reduce((res, item) => {
     const data = item.trim().split('=');
     return { ...res, [data[0]]: data[1] };
   }, {});
 
-  const jwt = cookies['jwt'];
-  if (!jwt)
-    return res.status(StatusCodes.BAD_REQUEST).send(ReasonPhrases.BAD_REQUEST);
-
   try {
+    const jwt = cookies['jwt'];
     const { payload } = await jwtVerify(jwt, PUBLIC_KEY, {
       algorithms: ['ES256'],
       issuer: 'NJP',
