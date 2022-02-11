@@ -1,5 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RoutesRecognized,
+} from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { Message, User } from 'src/app/models';
@@ -19,6 +24,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
   recipient?: User;
   subscription?: Subscription;
   routerSubscription?: Subscription;
+  routeSubscription?: Subscription;
 
   constructor(
     private service: MessageService,
@@ -31,11 +37,15 @@ export class ConversationComponent implements OnInit, OnDestroy {
     this.routerSubscription = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
-        const username = this.route.snapshot.queryParams['username'];
-        if (username) {
-          this.recipient = new User(username);
-          this.service.getConversation(username);
-        }
+        this.routeSubscription = this.route.firstChild?.paramMap.subscribe(
+          (paramMap) => {
+            const username = paramMap.get('username');
+            if (username) {
+              this.recipient = new User(username);
+              this.service.getConversation(username);
+            }
+          }
+        );
       });
   }
 
@@ -49,5 +59,6 @@ export class ConversationComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription?.unsubscribe();
     this.routerSubscription?.unsubscribe();
+    this.routeSubscription?.unsubscribe();
   }
 }

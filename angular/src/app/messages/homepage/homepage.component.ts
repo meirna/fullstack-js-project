@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { Message, User } from 'src/app/models';
-import { UserService } from 'src/app/user.service';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter, Subscription } from 'rxjs';
+import { Message } from 'src/app/models';
 import { MessageService } from '../message.service';
 import { environment } from 'src/environments/environment';
 
@@ -11,23 +10,41 @@ import { environment } from 'src/environments/environment';
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.css'],
 })
-export class HomepageComponent implements OnDestroy {
+export class HomepageComponent implements OnInit, OnDestroy {
   environment: any;
   messages: Message[] = [];
+  selectedUsername?: string | null;
   subscription?: Subscription;
+  routerSubscription?: Subscription;
+  routeSubscription?: Subscription;
 
-  constructor(private service: MessageService, private router: Router) {
+  constructor(
+    private service: MessageService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    this.routerSubscription = this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.routeSubscription = this.route.firstChild?.paramMap.subscribe(
+          (paramMap) => {
+            this.selectedUsername = paramMap.get('username');
+          }
+        );
+      });
+  }
+
+  ngOnInit() {
     this.environment = environment;
     this.subscription = this.service.messagesSubject.subscribe(
       (res) => (this.messages = res)
     );
-  }
-
-  ngOnInit() {
     this.service.getMessages();
   }
 
   ngOnDestroy() {
     this.subscription?.unsubscribe();
+    this.routerSubscription?.unsubscribe();
+    this.routeSubscription?.unsubscribe();
   }
 }

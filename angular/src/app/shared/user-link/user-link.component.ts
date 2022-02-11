@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input } from '@angular/core';
 import { User } from 'src/app/models';
 
 @Component({
@@ -7,17 +6,6 @@ import { User } from 'src/app/models';
   templateUrl: './user-link.component.html',
   styleUrls: ['./user-link.component.css'],
 })
-export class UserLinkComponent implements OnInit {
+export class UserLinkComponent {
   @Input() user?: User;
-
-  constructor(private router: Router) {}
-
-  ngOnInit() {}
-
-  onUsernameClick(event: any) {
-    if (this.user?.username)
-      this.router.navigate([`/messages`], {
-        queryParams: { username: event?.target?.innerHTML.trim() },
-      });
-  }
 }
