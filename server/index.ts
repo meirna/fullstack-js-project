@@ -1,6 +1,7 @@
 import { createPrivateKey, createPublicKey } from 'crypto';
 import { readFileSync } from 'fs';
 import express from 'express';
+import compression from 'compression';
 import helmet from 'helmet';
 import { Server } from 'http';
 import path from 'path';
@@ -20,6 +21,7 @@ export const PRIVATE_KEY = createPrivateKey({
 let app: Server;
 
 const server = express()
+  .use(compression())
   .use(express.json())
   // TODO: remove after prod build
   .use((req, res, next) => {

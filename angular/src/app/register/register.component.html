@@ -24,8 +24,12 @@
       (ngSubmit)="onSubmit()"
     >
       <label for="username" class="inline-block text-900 font-medium mb-2"
-        >Korisničko ime *</label
-      ><span
+        >Korisničko ime</label
+      >
+      <span *ngIf="!error" class="ml-3 text-sm text-gray-500"
+        >Obavezno polje</span
+      >
+      <span
         *ngIf="error"
         class="font-medium tracking-wide text-red-500 text-xs ml-2"
         >Zauzeto</span
@@ -35,17 +39,19 @@
         type="text"
         formControlName="username"
         [ngClass]="error ? 'border-red-500' : 'hover:border-indigo-600'"
-        class="w-full p-3 mb-3 border rounded-md"
+        class="w-full p-3 mb-2 border rounded-md"
         autofocus
       />
-      <label for="password" class="block text-900 font-medium mb-2"
-        >Lozinka *</label
+
+      <label for="password" class="inline-block text-900 font-medium mb-2"
+        >Lozinka</label
       >
+      <span class="ml-3 text-sm text-gray-500">Obavezno polje</span>
       <input
         id="password"
         type="password"
         formControlName="password"
-        class="w-full p-3 mb-3 border rounded-md hover:border-indigo-600"
+        class="w-full p-3 mb-2 border rounded-md hover:border-indigo-600"
       />
       <label for="email" class="block text-900 font-medium mb-2"
         >Email adresa</label

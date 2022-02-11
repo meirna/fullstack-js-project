@@ -10,7 +10,7 @@ export async function postComment(req: Request, res: Response) {
   const comment = {
     ...req.body,
     user: await loadUser(res.locals.username),
-    eventId: req.params.id,
+    eventId: new ObjectId(req.params.id),
     timestamp: new Date(),
   };
 
@@ -19,7 +19,7 @@ export async function postComment(req: Request, res: Response) {
     const db = await mongo.db();
     const { insertedId } = await db.collection('comments').insertOne(comment);
 
-    const updated = await collection.updateOne(
+    const inserted = await collection.updateOne(
       { _id: new ObjectId(req.params.id) },
       {
         $push: { comments: { ...comment, _id: new ObjectId(insertedId) } },

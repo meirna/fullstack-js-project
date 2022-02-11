@@ -6,12 +6,17 @@
     />
   </div>
   <div
-    class="flex-1 border rounded-lg px-4 py-2 sm:px-5 sm:py-3 leading-relaxed"
+    class="flex flex-col w-full border rounded-lg px-4 py-2 sm:px-5 sm:py-3 leading-relaxed"
   >
-    <strong>{{ comment?.user?.username }}</strong>
-    <span class="text-xs text-gray-400 ml-2">{{
-      comment?.timestamp | date: "short"
-    }}</span>
+    <div class="flex">
+      <app-user-link
+        [user]="comment!.user"
+        class="font-semibold text-sm"
+      ></app-user-link>
+      <span class="text-xs text-gray-400 ml-2 self-center">{{
+        comment?.timestamp | date: "short"
+      }}</span>
+    </div>
     <p class="text-sm">
       {{ comment?.text }}
     </p>
