@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { Event } from 'src/app/models';
+import { Event, User } from 'src/app/models';
 import { UserService } from 'src/app/user.service';
 import { EventService } from '../../events/event.service';
 
@@ -11,10 +11,11 @@ import { EventService } from '../../events/event.service';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  subscription?: Subscription;
+  user?: User;
   isLoggedIn = false;
   isProfileOpen = false;
   isMenuOpen = false;
+  subscription?: Subscription;
 
   constructor(
     private userService: UserService,
@@ -25,6 +26,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.userService.behaviorSubject.subscribe((res) => {
       if (res) {
+        this.user = this.userService.getUser();
         this.isLoggedIn = true;
       } else {
         this.isLoggedIn = false;
