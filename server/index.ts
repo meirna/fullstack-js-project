@@ -34,8 +34,15 @@ const server = express()
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     next();
   })
-  // .use(helmet())
-  /*.use(express.static(path.join(__dirname, '../frontend/dist'))) */
+  // .use(
+  //   helmet.contentSecurityPolicy({
+  //     directives: {
+  //       'script-src': ["'self' 'unsafe-inline'"],
+  //       'script-src-attr': null,
+  //     },
+  //   })
+  // )
+  // .use(express.static(path.join(__dirname, './public')))
   .use('/assets', express.static(path.join(__dirname, './assets/images')))
   .use('/api/events', eventController)
   .use('/api/messages', messageController)

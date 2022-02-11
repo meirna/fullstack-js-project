@@ -1,7 +1,9 @@
 module.exports = {
-  purge: [],
+  purge: {
+    enabled: true,
+    content: ["./src/**/*.{html,ts,css}"],
+  },
   darkMode: false, // or 'media' or 'class'
-  content: ["./src/**/*.{html,ts}"],
   theme: {
     extend: {
       minHeight: {
