@@ -12,7 +12,6 @@ import { EventService } from '../../events/event.service';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   user?: User;
-  isLoggedIn = false;
   isProfileOpen = false;
   isMenuOpen = false;
   subscription?: Subscription;
@@ -26,12 +25,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.userService.behaviorSubject.subscribe((res) => {
-      if (res) {
-        this.user = this.userService.getUser();
-        this.isLoggedIn = true;
-      } else {
-        this.isLoggedIn = false;
-      }
+      this.user = this.userService.getUser();
     });
   }
 
@@ -53,7 +47,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   onButtonClick() {
-    if (this.isLoggedIn) {
+    if (this.user?.username) {
       this.eventService.eventSubject?.next(new Event());
       this.router.navigate(['/events/new']);
     } else {
