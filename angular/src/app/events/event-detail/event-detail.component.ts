@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { EventService } from '../event.service';
-import { Event, User } from 'src/app/models';
-import { UserService } from 'src/app/user.service';
+import { EventService } from '../../shared/event.service';
+import { Event, User } from 'src/app/shared/models';
+import { UserService } from 'src/app/shared/user.service';
 
 @Component({
   selector: 'app-event-detail',
@@ -12,9 +12,10 @@ import { UserService } from 'src/app/user.service';
 })
 export class EventDetailComponent implements OnInit {
   event?: Event;
+  user?: User;
   eventSubject?: BehaviorSubject<Event | undefined>;
   eventSubscription?: Subscription;
-  user?: User;
+  userSubscription?: Subscription;
   error = false;
 
   constructor(
@@ -32,7 +33,9 @@ export class EventDetailComponent implements OnInit {
       if (res) this.event = res;
       else this.error = true;
     });
-    this.user = this.userService.getUser();
+    this.userSubscription = this.userService.behaviorSubject.subscribe(
+      (res) => (this.user = res)
+    );
   }
 
   onEditClick() {
@@ -49,5 +52,6 @@ export class EventDetailComponent implements OnInit {
 
   ngOnDestroy() {
     this.eventSubscription?.unsubscribe();
+    this.userSubscription?.unsubscribe();
   }
 }

@@ -17,7 +17,7 @@ export async function verifyToken(req: Request, res: Response, next: Function) {
     const { payload } = await jwtVerify(jwt, PUBLIC_KEY, {
       algorithms: ['ES256'],
       issuer: 'NJP',
-      maxTokenAge: '2h',
+      maxTokenAge: '6h',
     });
     res.locals.username = payload.username;
 

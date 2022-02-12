@@ -22,13 +22,16 @@ export async function login(
       .send(ReasonPhrases.UNAUTHORIZED);
 
   return res
-    .cookie('jwt', await generateJWT(username), { httpOnly: true })
+    .cookie('jwt', await generateJWT(username), { httpOnly: true, path: '/' })
     .status(StatusCodes.OK)
     .send({ username: username });
 }
 
 export async function logout(req: Request, res: Response) {
-  return res.clearCookie('jwt').status(StatusCodes.OK).send();
+  return res
+    .clearCookie('jwt', { httpOnly: true, path: '/' })
+    .status(StatusCodes.OK)
+    .send();
 }
 
 export async function register({ body }: Request, res: Response) {

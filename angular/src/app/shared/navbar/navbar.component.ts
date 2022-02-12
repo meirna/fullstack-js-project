@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Event, User } from 'src/app/models';
-import { UserService } from 'src/app/user.service';
-import { EventService } from '../../events/event.service';
+import { Event, User } from 'src/app/shared/models';
+import { UserService } from 'src/app/shared/user.service';
+import { EventService } from '../event.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,9 +12,9 @@ import { EventService } from '../../events/event.service';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   user?: User;
+  subscription?: Subscription;
   isProfileOpen = false;
   isMenuOpen = false;
-  subscription?: Subscription;
 
   constructor(
     private userService: UserService,
@@ -24,7 +24,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.userService.behaviorSubject.subscribe((res) => {
-      this.user = this.userService.getUser();
+      this.user = res;
     });
   }
 
@@ -42,6 +42,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   onLogout() {
     this.userService.logout();
+    this.eventService.clear();
   }
 
   onButtonClick() {

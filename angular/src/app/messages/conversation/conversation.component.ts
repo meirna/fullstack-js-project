@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
-import { Message, User } from 'src/app/models';
-import { UserService } from 'src/app/user.service';
-import { MessageService } from '../message.service';
+import { Message, User } from 'src/app/shared/models';
+import { UserService } from 'src/app/shared/user.service';
+import { MessageService } from '../../shared/message.service';
 import { environment } from 'src/environments/environment';
 import { FormBuilder, Validators } from '@angular/forms';
 
@@ -21,6 +20,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
   subscription?: Subscription;
   routerSubscription?: Subscription;
   routeSubscription?: Subscription;
+  userSubscription?: Subscription;
   error = false;
   submitted = false;
 
@@ -42,7 +42,6 @@ export class ConversationComponent implements OnInit, OnDestroy {
       if (res) this.conversation = res;
       else if (this.submitted) this.error = true;
     });
-    this.user = this.userService.getUser();
     this.routeSubscription = this.route.firstChild?.paramMap.subscribe(
       (paramMap) => {
         const username = paramMap.get('username');
@@ -50,6 +49,11 @@ export class ConversationComponent implements OnInit, OnDestroy {
           this.recipient = new User(username);
           this.service.getConversation(username);
         }
+      }
+    );
+    this.userSubscription = this.userService.behaviorSubject.subscribe(
+      (res) => {
+        this.user = res;
       }
     );
   }
@@ -68,5 +72,6 @@ export class ConversationComponent implements OnInit, OnDestroy {
     this.subscription?.unsubscribe();
     this.routerSubscription?.unsubscribe();
     this.routeSubscription?.unsubscribe();
+    this.userSubscription?.unsubscribe();
   }
 }
