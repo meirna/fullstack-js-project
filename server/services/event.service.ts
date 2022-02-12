@@ -58,7 +58,7 @@ export async function getAll(req: Request, res: Response) {
 export async function insert({ body: data }: Request, res: Response) {
   try {
     let event: Event = data as Event;
-    if (event.image.data) event = await saveImageFile(event);
+    if (event.image?.data) event = await saveImageFile(event);
     const collection = await new Event().collection();
     const { insertedId } = await collection.insertOne({
       ...(event as any),

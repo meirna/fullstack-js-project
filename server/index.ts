@@ -25,26 +25,26 @@ const server = express()
   .use(express.json({ limit: '3mb' }));
 
 if (process.env.NODE_ENV === 'development') {
-  server.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    res.setHeader(
-      'Access-Control-Allow-Methods',
-      'POST, GET, PUT, DELETE, OPTIONS'
-    );
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    next();
-  });
+  server
+    .use((req, res, next) => {
+      res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+      res.setHeader(
+        'Access-Control-Allow-Methods',
+        'POST, GET, PUT, DELETE, OPTIONS'
+      );
+      res.setHeader('Access-Control-Allow-Credentials', 'true');
+      next();
+    })
+    .use('/assets', express.static(path.join(__dirname, './assets/images')))
+    .use('/api/events', eventController)
+    .use('/api/messages', messageController)
+    .use('/api/users', userController);
 }
-
-server
-  .use('/assets', express.static(path.join(__dirname, './assets/images')))
-  .use('/api/events', eventController)
-  .use('/api/messages', messageController)
-  .use('/api/users', userController);
 
 if (process.env.NODE_ENV === 'production') {
   server
+    .use(helmet())
     .use(
       helmet.contentSecurityPolicy({
         directives: {
@@ -54,6 +54,10 @@ if (process.env.NODE_ENV === 'production') {
       })
     )
     .use(express.static(path.join(__dirname, './public')))
+    .use('/assets', express.static(path.join(__dirname, './assets/images')))
+    .use('/api/events', eventController)
+    .use('/api/messages', messageController)
+    .use('/api/users', userController)
     .use('/*', (req, res) =>
       res.sendFile(path.join(__dirname, './public/index.html'))
     );
