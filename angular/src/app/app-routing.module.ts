@@ -4,7 +4,7 @@ import { EventsModule } from './events/events.module';
 import { LoginComponent } from './login/login.component';
 import { MessagesModule } from './messages/messages.module';
 import { RegisterComponent } from './register/register.component';
-import { UserService as AuthGuard } from './user.service';
+import { UserService as AuthGuard } from './shared/user.service';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },

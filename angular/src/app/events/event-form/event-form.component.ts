@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { Event, Image } from 'src/app/models';
-import { EventService } from '../event.service';
+import { Event, Image } from 'src/app/shared/models';
+import { EventService } from '../../shared/event.service';
 
 @Component({
   selector: 'app-event-form',
@@ -34,7 +34,7 @@ export class EventFormComponent implements OnInit {
     image: [''],
   });
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.subscription = this.service.eventSubject.subscribe((res) => {
       if (res) {
         this.error = false;

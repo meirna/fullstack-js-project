@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Comment, Event } from 'src/app/models';
-import { EventService } from '../event.service';
+import { Comment, Event } from 'src/app/shared/models';
+import { EventService } from '../../shared/event.service';
 
 @Component({
   selector: 'app-comment-form',

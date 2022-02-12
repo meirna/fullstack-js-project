@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { Event } from 'src/app/models';
-import { EventService } from '../event.service';
+import { Event } from 'src/app/shared/models';
+import { EventService } from '../../shared/event.service';
 
 @Component({
   selector: 'app-homepage',

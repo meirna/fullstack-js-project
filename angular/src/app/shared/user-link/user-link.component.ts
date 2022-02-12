@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { User } from 'src/app/models';
+import { User } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-user-link',

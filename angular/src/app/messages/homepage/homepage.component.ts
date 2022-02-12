@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, Subscription } from 'rxjs';
-import { Message } from 'src/app/models';
-import { MessageService } from '../message.service';
+import { Message } from 'src/app/shared/models';
+import { MessageService } from '../../shared/message.service';
 import { environment } from 'src/environments/environment';
 
 @Component({

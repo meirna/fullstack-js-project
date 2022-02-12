@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { User } from '../models';
-import { UserService } from '../user.service';
+import { User } from '../shared/models';
+import { UserService } from '../shared/user.service';
 
 @Component({
   selector: 'app-login',
