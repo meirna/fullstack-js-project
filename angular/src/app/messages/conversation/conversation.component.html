@@ -1,60 +1,60 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="w-full">
-  <div class="flex flex-col flex-auto h-conversation w-full p-6">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="h-full w-full">
+  <div class="flex flex-col flex-auto w-full h-full p-6">
     <div class="flex w-full p-4 font-semibold">
       {{ recipient?.username }}
     </div>
-    <div class="flex flex-col flex-auto rounded-2xl bg-gray-100 h-full p-4">
-      <div class="flex flex-col h-full overflow-x-auto mb-4">
-        <div class="flex flex-col h-full">
-          <div class="grid grid-cols-12 gap-y-2">
+    <div
+      class="flex flex-col flex-auto rounded-2xl bg-gray-100 p-4 h-conversation-window justify-between"
+    >
+      <div class="flex flex-col mb-4 overflow-y-auto grow">
+        <div class="grid grid-cols-12 gap-y-2">
+          <div
+            *ngFor="let message of conversation"
+            [ngClass]="
+              message.user?.username == user?.username
+                ? 'col-start-6 col-end-13'
+                : 'col-start-1 col-end-8'
+            "
+            class="p-3 rounded-lg"
+          >
             <div
-              *ngFor="let message of conversation"
               [ngClass]="
                 message.user?.username == user?.username
-                  ? 'col-start-6 col-end-13'
-                  : 'col-start-1 col-end-8'
+                  ? 'flex-row-reverse'
+                  : ''
               "
-              class="p-3 rounded-lg"
+              class="flex flex-row items-center"
             >
+              <div
+                class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
+              >
+                <img
+                  *ngIf="message.user?.image"
+                  class="rounded-full"
+                  [src]="environment.api + '/assets/' + message.user?.image"
+                />
+                {{
+                  message.user?.image
+                    ? ""
+                    : message.user?.username?.charAt(0)?.toUpperCase()
+                }}
+              </div>
               <div
                 [ngClass]="
                   message.user?.username == user?.username
-                    ? 'flex-row-reverse'
-                    : ''
+                    ? 'mr-3 bg-indigo-100'
+                    : 'ml-3 bg-white'
                 "
-                class="flex flex-row items-center"
+                class="relative text-sm py-2 px-4 shadow rounded-xl"
               >
-                <div
-                  class="flex items-center justify-center h-10 w-10 rounded-full bg-indigo-500 flex-shrink-0"
-                >
-                  <img
-                    *ngIf="message.user?.image"
-                    class="rounded-full"
-                    [src]="environment.api + '/assets/' + message.user?.image"
-                  />
-                  {{
-                    message.user?.image
-                      ? ""
-                      : message.user?.username?.charAt(0)?.toUpperCase()
-                  }}
-                </div>
-                <div
-                  [ngClass]="
-                    message.user?.username == user?.username
-                      ? 'mr-3 bg-indigo-100'
-                      : 'ml-3 bg-white'
-                  "
-                  class="relative text-sm py-2 px-4 shadow rounded-xl"
-                >
-                  <div>{{ message.text }}</div>
-                </div>
+                <div>{{ message.text }}</div>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div
-        class="flex flex-row items-center h-16 rounded-xl bg-white w-full px-4"
+        class="flex flex-row items-center h-16 rounded-xl bg-white w-full p-4"
       >
         <div class="ml-4 w-full">
           <div class="relative w-full">

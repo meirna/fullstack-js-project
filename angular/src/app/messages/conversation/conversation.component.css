@@ -1,9 +1,3 @@
-.h-conversation {
-  height: calc(100vh - 4rem);
-}
-
-@media (min-width: 1280px) {
-  .h-conversation {
-    height: calc(100vh - 7rem);
-  }
+.h-conversation-window {
+  height: calc(100% - 4rem);
 }

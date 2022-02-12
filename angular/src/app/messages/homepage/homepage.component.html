@@ -1,10 +1,12 @@
 <app-navbar></app-navbar>
-<div class="bg-gray-100 xl:py-5">
+<div class="bg-gray-100 xl:py-5 box-border">
   <div
     class="grid h-conversation max-w-7xl mx-auto antialiased text-gray-800 xl:shadow sm:rounded-md sm:overflow-hidden"
   >
-    <div class="flex flex-row overflow-x-hidden bg-white">
-      <div class="flex flex-col py-8 pl-8 pr-2 w-64">
+    <div class="flex flex-col sm:flex-row bg-white">
+      <div
+        class="flex flex-col py-8 px-8 w-full sm:w-72 sm:px-0 sm:pl-8 sm:pr-2"
+      >
         <div class="flex flex-row items-center justify-center h-12 w-full">
           <div
             class="flex items-center justify-center rounded-2xl text-indigo-700 bg-indigo-100 h-10 w-10"
@@ -68,7 +70,7 @@
       </div>
       <app-conversation
         *ngIf="selectedUsername"
-        class="w-full bg-white"
+        class="h-conversation w-full bg-white"
       ></app-conversation>
       <div
         *ngIf="!selectedUsername"
