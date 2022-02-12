@@ -19,8 +19,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService,
     private eventService: EventService,
-    private router: Router,
-    private route: ActivatedRoute
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -43,7 +42,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   onLogout() {
     this.userService.logout();
-    this.router.navigate(['/']);
   }
 
   onButtonClick() {

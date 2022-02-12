@@ -81,9 +81,10 @@ export class UserService implements CanLoad, CanActivate {
         })
       )
       .subscribe((res) => {
+        this.cookieService.delete('user');
         this.user = undefined;
         this.behaviorSubject.next(false);
-        this.cookieService.delete('user');
+        this.router.navigateByUrl('');
         window.location.reload();
       });
   }
