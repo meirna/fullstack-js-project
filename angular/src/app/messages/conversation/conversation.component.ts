@@ -60,6 +60,7 @@ export class ConversationComponent implements OnInit, OnDestroy {
       this.service.postMessage(
         new Message(this.user, this.recipient, this.form.value.text)
       );
+      this.form.reset({ text: '' });
     }
   }
 

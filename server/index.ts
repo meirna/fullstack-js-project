@@ -22,9 +22,10 @@ let app: Server;
 
 const server = express()
   .use(compression())
-  .use(express.json({ limit: '3mb' }))
-  // TODO: remove after prod build
-  .use((req, res, next) => {
+  .use(express.json({ limit: '3mb' }));
+
+if (process.env.NODE_ENV === 'development') {
+  server.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     res.setHeader(
@@ -33,20 +34,30 @@ const server = express()
     );
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     next();
-  })
-  // .use(
-  //   helmet.contentSecurityPolicy({
-  //     directives: {
-  //       'script-src': ["'self' 'unsafe-inline'"],
-  //       'script-src-attr': null,
-  //     },
-  //   })
-  // )
-  // .use(express.static(path.join(__dirname, './public')))
+  });
+}
+
+server
   .use('/assets', express.static(path.join(__dirname, './assets/images')))
   .use('/api/events', eventController)
   .use('/api/messages', messageController)
   .use('/api/users', userController);
+
+if (process.env.NODE_ENV === 'production') {
+  server
+    .use(
+      helmet.contentSecurityPolicy({
+        directives: {
+          'script-src': ["'self' 'unsafe-inline'"],
+          'script-src-attr': null,
+        },
+      })
+    )
+    .use(express.static(path.join(__dirname, './public')))
+    .use('/*', (req, res) =>
+      res.sendFile(path.join(__dirname, './public/index.html'))
+    );
+}
 
 mongo
   .db()
