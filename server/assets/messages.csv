@@ -1,0 +1,24 @@
+_id,recipient.image,recipient.username,text,user.image,user.username
+620037cbb9eb70d1a455d92e,,drugi_korisnik,poruka drugom,kid-g0a112129f_640.png,korisnik
+62003ca7bd7494a65de93d57,,treci_korisnik,poruka trećem,kid-g0a112129f_640.png,korisnik
+62003d7ee7faf9dd9488d312,,treci_korisnik,poruka trećem,kid-g0a112129f_640.png,korisnik
+6204e0b9ba9293165781b993,kid-g0a112129f_640.png,korisnik,treći šalje,,treci_korisnik
+620683cb8923558a37f2f5de,kid-g0a112129f_640.png,korisnik,test,,korisnik2
+620684128923558a37f2f5df,,korisnik2,evo odg,kid-g0a112129f_640.png,korisnik
+6206844bead761db27e87b8c,,korisnik2,evo odg2,kid-g0a112129f_640.png,korisnik
+62069617a3d7e4be1d8536b0,,korisnik3,evo ti poruka,kid-g0a112129f_640.png,korisnik
+620707938824e4c62159fba7,,korisnik2,a,kid-g0a112129f_640.png,korisnik
+620707948824e4c62159fba8,,korisnik2,a,kid-g0a112129f_640.png,korisnik
+620707948824e4c62159fba9,,korisnik2,a,kid-g0a112129f_640.png,korisnik
+620707958824e4c62159fbaa,,korisnik2,a,kid-g0a112129f_640.png,korisnik
+620707958824e4c62159fbab,,korisnik2,a,kid-g0a112129f_640.png,korisnik
+620707958824e4c62159fbac,,korisnik2,a,kid-g0a112129f_640.png,korisnik
+620707958824e4c62159fbad,,korisnik2,a,kid-g0a112129f_640.png,korisnik
+620707968824e4c62159fbae,,korisnik2,a,kid-g0a112129f_640.png,korisnik
+620707968824e4c62159fbaf,,korisnik2,a,kid-g0a112129f_640.png,korisnik
+620707968824e4c62159fbb0,,korisnik2,a,kid-g0a112129f_640.png,korisnik
+620707968824e4c62159fbb1,,korisnik2,a,kid-g0a112129f_640.png,korisnik
+620707968824e4c62159fbb2,,korisnik2,a,kid-g0a112129f_640.png,korisnik
+620707978824e4c62159fbb3,,korisnik2,a,kid-g0a112129f_640.png,korisnik
+620707978824e4c62159fbb4,,korisnik2,a,kid-g0a112129f_640.png,korisnik
+62070e348824e4c62159fbb5,,korisnik2,lk,kid-g0a112129f_640.png,korisnik

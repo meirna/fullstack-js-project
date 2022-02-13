@@ -1,0 +1,4 @@
+_id,eventId,text,user.exp,user.iat,user.image,user.iss,user.username
+61fb8fe55635df90f1400245,61fac80ca8033671a5484b23,Jedan mali komentar,1643878370,1643874770,,NJP,korisnik
+61fbaa56130a648910da3954,61fac80ca8033671a5484b22,Jedan mali komentar,,,kid-g0a112129f_640.png,,korisnik
+62067ab58cd41bf08560294e,61fac80ca8033671a5484b22,"Malo veći komentar koji ima više teksta pa prelazi u novi red. Dodali smo još teksta. Još riječi. Slova i slova pa razmaci i točke, zarezi.",,,kid-g0a112129f_640.png,,korisnik
