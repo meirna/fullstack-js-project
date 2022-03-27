@@ -1,0 +1,2 @@
+# fullstack-js-project
+This is my final project for module *Advanced JavaScript Programming (Napredno JavaScript programiranje)* at Zagreb University of Applied Sciences in academic year 2021/2022. It's a full stack application built using Express.js and Angular.
